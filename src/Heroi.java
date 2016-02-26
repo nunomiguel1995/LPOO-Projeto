@@ -1,9 +1,8 @@
-
 public class Heroi {
-	int x;
-	int y;
-	boolean armado;
-	char simbolo;
+	private int x;
+	private int y;
+	private boolean armado;
+	private char simbolo;
 	
 	public Heroi(int x,int y,char simb){
 		this.x=x;
@@ -43,6 +42,4 @@ public class Heroi {
 	public void setSimbolo(char simbolo) {
 		this.simbolo = simbolo;
 	}
-	
-	
 }
