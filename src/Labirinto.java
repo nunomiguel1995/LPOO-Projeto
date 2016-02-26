@@ -1,3 +1,5 @@
+import java.util.Scanner;
+
 public class Labirinto {
 	private char layout[][]; //layout[linha][coluna]
 	private Heroi heroi;
@@ -5,7 +7,7 @@ public class Labirinto {
 	public Labirinto(){
 		layout = new char[][] {
 			{'X','X','X','X','X','X','X','X','X','X'},
-			{'X','H',' ',' ',' ',' ',' ',' ',' ','X'},
+			{'X',' ',' ',' ',' ',' ',' ',' ',' ','X'},
 			{'X',' ','X','X',' ','X',' ','X',' ','X'},
 			{'X','D','X','X',' ','X',' ','X',' ','X'},
 			{'X',' ','X','X',' ','X',' ','X',' ','X'},
@@ -33,10 +35,56 @@ public class Labirinto {
 
 	public void setHeroi(Heroi heroi) {
 		this.heroi = heroi;
+		layout[heroi.getX()][heroi.getY()]= heroi.getSimbolo();
 	}
 
-	public void moveHeroi(int x, int y, char simbolo){
-		layout[x][y] = simbolo;
+	
+	public void moveHeroi(){
+		Scanner s = new Scanner(System.in);
+		String movimento;
+		int heroix= heroi.getX();
+		int heroiy=heroi.getY();
+		
+		System.out.println("Mover herói: ");
+		movimento = s.next();
+		s.close();
+		
+		boolean parede= false;
+		switch(movimento){
+		case "cima":
+			heroix= heroix-1;
+			if(layout[heroix][heroiy]=='X')
+				parede=true;
+			else
+				layout[heroix+1][heroiy]=' ';
+			break;
+		case "baixo":
+			heroix= heroix+1;
+			if(layout[heroix][heroiy]=='X')
+				parede=true;
+			else
+				layout[heroix-1][heroiy]=' ';
+			break;
+		case "esquerda":
+			heroiy=heroiy-1;
+			if(layout[heroix][heroiy]=='X')
+				parede=true;
+			else
+				layout[heroix][heroiy+1]=' ';
+			break;
+		case "direita":
+			heroiy=heroiy+1;
+			if(layout[heroix][heroiy]=='X')
+				parede=true;
+			else
+				layout[heroix][heroiy-1]=' ';
+			break;		
+		}
+		
+		if(!parede){
+			char simb= heroi.getSimbolo();
+			setHeroi(new Heroi(heroix,heroiy,simb));
+		}
 	}
 	
 	public void print(){
