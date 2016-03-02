@@ -8,15 +8,22 @@ public class Jogo {
 	private Espada espada;
 	private Dragao dragao;
 	
-	public Jogo(){
+	private boolean dragaoParado;
+	private boolean dragaoAdormece;
+
+	public Jogo(boolean dragaoParado, boolean dragaoAdormece){
 		labirinto = new Labirinto();
+		
 		heroi = new Heroi(1,1,'H',false);
 		espada= new Espada(1,2,'E');
-		dragao= new Dragao(3,1,'D');
-		
+		dragao= new Dragao(3,1,'D',false,false);
+	
 		labirinto.setHeroi(heroi);
 		labirinto.setEspada(espada);
 		labirinto.setDragao(dragao);		
+		
+		this.dragaoParado=dragaoParado;
+		this.dragaoAdormece=dragaoAdormece;
 	}
 	
 	public Labirinto getLabirinto() {
@@ -50,89 +57,29 @@ public class Jogo {
 	public void setDragao(Dragao dragao) {
 		this.dragao = dragao;
 	}
-
-	public boolean armaHeroi(int x,int y){
-		int espadaX= espada.getX();
-		int espadaY= espada.getY();
-		if(x==espadaX && y==espadaY)
-			return true;
-		else 
-			return false;		
-	}
 	
+	public void atualizaLabirinto(){
+		if(dragao.getVivo())
+			labirinto.setDragao(dragao);
+		if(!dragao.getCimaEspada() && !heroi.getArmado())
+			labirinto.setEspada(espada);
+		labirinto.setHeroi(heroi);
+	}
+
+	
+
 	//Verifica se o heroi combate o dragão(está em posição adjacente)
 	//Caso combata: ganha se estiver armado, perde se não
-		public int enfrentaDragao(){
-			int heroiX=heroi.getX(), dragaoX=dragao.getX();
-			int heroiY=heroi.getY(), dragaoY=dragao.getY();
-			boolean combate= ( (dragaoX==heroiX+1 && dragaoY==heroiY) || (dragaoX== heroiX-1 && dragaoY==heroiY) || (dragaoY == heroiY+1 && dragaoX==heroiX)|| (dragaoY== heroiY-1 && dragaoX==heroiX));
-			
-			if(combate){
-				if(heroi.getArmado()){
-					labirinto.setSimbolo(dragaoX,dragaoY,' ');
-					dragao.setVivo(false);
-					return 1;
-				}
-				else
-					return -1;
-			}
-			else
-				return 0;
-		}
-		
-		public int moveHeroi(){
+
+
+		public int jogada(){
 			Scanner s = new Scanner(System.in);
 			String movimento;
-			int heroix= heroi.getX();
-			int heroiy=heroi.getY();
 
 			System.out.println("Mover herói: ");
 			movimento = s.nextLine();
-
-			boolean parede= false;
-			boolean saida=false;
-			switch(movimento){
-			case "cima":
-				heroix= heroix-1;
-				if(labirinto.getSimbolo(heroix,heroiy)=='X')
-					parede=true;
-				else if(labirinto.getSimbolo(heroix,heroiy)=='S')
-					saida=true;
-				else
-					labirinto.setSimbolo(heroix+1, heroiy, ' ');
-				break;
-			case "baixo":
-				heroix= heroix+1;
-				if(labirinto.getSimbolo(heroix,heroiy)=='X')
-					parede=true;
-				else if(labirinto.getSimbolo(heroix,heroiy)=='S')
-					saida=true;
-				else
-					labirinto.setSimbolo(heroix-1, heroiy, ' ');
-				break;
-			case "esquerda":
-				heroiy=heroiy-1;
-				if(labirinto.getSimbolo(heroix,heroiy)=='X')
-					parede=true;
-				else if(labirinto.getSimbolo(heroix,heroiy)=='S')
-					saida=true;
-				else
-					labirinto.setSimbolo(heroix, heroiy+1, ' ');
-				break;
-			case "direita":
-				heroiy=heroiy+1;
-				if(labirinto.getSimbolo(heroix,heroiy)=='X')
-					parede=true;
-				else if(labirinto.getSimbolo(heroix,heroiy)=='S')
-					saida=true;
-				else
-					labirinto.setSimbolo(heroix, heroiy-1, ' ');
-				break;	
-			case "sair":
-				return -1;
-			}
-
-			if(saida){
+			
+			if(heroi.moveHeroi(labirinto, movimento)==1){
 				if(!dragao.getVivo()){
 					System.out.println("Parabens, ganhou o jogo!");
 					return 1;
@@ -141,24 +88,23 @@ public class Jogo {
 					System.out.println("Antes de sair tem de derrotar o Dragao");
 			}
 
-			if(!parede && !saida){
-				char simb=heroi.getSimbolo();
-				boolean arm= heroi.getArmado();
-				if(armaHeroi(heroix,heroiy)){
-					labirinto.setHeroi(new Heroi(heroix,heroiy,'A',true));
-					heroi= new Heroi(heroix,heroiy,'A',true);
-				}				
-				else{
-					labirinto.setHeroi(new Heroi(heroix,heroiy,simb,arm));	
-					heroi= new Heroi(heroix,heroiy,simb,arm);
-				}
-					
-			}
-
+			heroi.armaHeroi(espada);
+			
 			if(dragao.getVivo()){
-				int combate= enfrentaDragao();
+				if(dragaoAdormece)
+					dragao.adormeceOuAcorda();
+				
+				if(!dragao.getAdormecido() && !dragaoParado){
+					dragao.moveDragao(labirinto);
+					dragao.dragaoCimaEspada(espada);
+				}
+				
+				int combate= heroi.enfrentaDragao(dragao);
 				switch(combate){
 				case 1:
+					dragao.setSimbolo(' ');
+					labirinto.setDragao(dragao);
+					dragao.setVivo(false);
 					System.out.println("Derrotou o Dragao!");
 					break;
 				case -1:
@@ -166,7 +112,7 @@ public class Jogo {
 					return -1;
 				}
 			}
-
+			atualizaLabirinto();
 			return 0;
 		}
 }
