@@ -116,9 +116,7 @@ public class Dragao extends Personagem {
 	public void adormeceOuAcorda(){
 		int i= adormece.nextInt(6-1)+1;
 		switch(i){
-		case 1:
-		case 3:
-		case 5:
+		case 1:	case 3:	case 5:
 			break;
 		case 2:
 		case 4:
