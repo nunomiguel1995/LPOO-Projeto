@@ -37,68 +37,77 @@ public class Dragao extends Personagem {
 		return adormecido;
 	}
 	
+	public Ponto getPosicaoDragao(){
+		return getPosicao();
+	}
+	
 	public void moveDragao(Labirinto labirinto){
 		int movimento = movimentoDragao.nextInt(6-1)+1;
-		int dragaoX = getX();
-		int dragaoY = getY();
+
+		int dragaoX = getPosicao().getX(), dragaoY = getPosicao().getY();
 
 		switch(movimento){
 		case 1:
 			break;
 		case 2: //cima
 			dragaoX -= 1;
-			if(labirinto.getSimbolo(dragaoX,dragaoY)=='X')
+			if(labirinto.getSimbolo(new Ponto(dragaoX, dragaoY)) == 'X')
 				break;
 			else{
-				labirinto.setSimbolo(dragaoX+1, dragaoY, ' ');
+				labirinto.setSimbolo(new Ponto(dragaoX + 1, dragaoY), ' ');
 				labirinto.setDragao(new Dragao(dragaoX,dragaoY,'D',cimaEspada,adormecido));
-				setX(dragaoX);
+				setPosicao(new Ponto(dragaoX, dragaoY));
+				labirinto.setPosDragao(new Ponto(dragaoX,dragaoY));
 			}
 			break;
 		case 3: //baixo
 			dragaoX += 1;
-			if(labirinto.getSimbolo(dragaoX,dragaoY)=='X')
+			if(labirinto.getSimbolo(new Ponto(dragaoX,dragaoY)) == 'X')
 				break;
 			else{
-				labirinto.setSimbolo(dragaoX-1, dragaoY, ' ');
+				labirinto.setSimbolo(new Ponto(dragaoX - 1, dragaoY), ' ');
 				labirinto.setDragao(new Dragao(dragaoX,dragaoY,'D',cimaEspada,adormecido));
-				setX(dragaoX);
+				setPosicao(new Ponto(dragaoX, dragaoY));
+				labirinto.setPosDragao(new Ponto(dragaoX,dragaoY));
 			}
 			break;
 		case 4: // esquerda
 			dragaoY -= 1;
-			if(labirinto.getSimbolo(dragaoX,dragaoY)=='X')
+			if(labirinto.getSimbolo(new Ponto(dragaoX,dragaoY)) == 'X')
 				break;
 			else{
-				labirinto.setSimbolo(dragaoX, dragaoY+1, ' ');
+				labirinto.setSimbolo(new Ponto(dragaoX, dragaoY + 1), ' ');
 				labirinto.setDragao(new Dragao(dragaoX,dragaoY,'D',cimaEspada,adormecido));
-				setY(dragaoY);
+				setPosicao(new Ponto(dragaoX, dragaoY));
+				labirinto.setPosDragao(new Ponto(dragaoX,dragaoY));
 			}
 			break;
 		case 5:
 			dragaoY += 1;
-			if(labirinto.getSimbolo(dragaoX,dragaoY)=='X')
+			if(labirinto.getSimbolo(new Ponto(dragaoX,dragaoY)) == 'X')
 				break;
 			else{
-				labirinto.setSimbolo(dragaoX, dragaoY-1, ' ');
+				labirinto.setSimbolo(new Ponto(dragaoX, dragaoY - 1), ' ');
 				labirinto.setDragao(new Dragao(dragaoX,dragaoY,'D',cimaEspada,adormecido));
-				setY(dragaoY);
+				setPosicao(new Ponto(dragaoX, dragaoY));
+				labirinto.setPosDragao(new Ponto(dragaoX,dragaoY));
 			}
 			break;	
 		}				
 	}
 	
 	public void dragaoCimaEspada(Espada espada){
-		int dragaoX=this.getX(), espadaX=espada.getX();
-		int dragaoY=this.getY(), espadaY=espada.getY();
+		Ponto posEspada = espada.getPosicaoEspada();
+		Ponto posDragao = getPosicao();
+
 		boolean emCima=this.getCimaEspada();
 		
-		if(dragaoX==espadaX && dragaoY==espadaY && emCima==false ){
+		if(posEspada.equals(posDragao) && emCima==false ){
 			this.setCimaEspada(true);
 			this.setSimbolo('F');
 		}
 		
-		if((dragaoX!=espadaX || dragaoY!=espadaY) && emCima==true ){
+		if((posDragao.getX() != posEspada.getX() || posDragao.getY() != posEspada.getY()) && emCima==true ){
 			this.setCimaEspada(false);
 			this.setSimbolo('D');
 		}

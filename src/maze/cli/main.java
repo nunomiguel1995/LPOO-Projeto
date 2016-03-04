@@ -10,10 +10,10 @@ public class main {
 		
 		System.out.println("Qual a estrategia pretendida (selecione a opcao):");
 		System.out.println("1 - Dragao parado");
-		System.out.println("2- Dragao com movimentacao alientoria");
-		System.out.println("3- Dragão com movimentacao aleatoria intercalada com dormir");
+		System.out.println("2 - Dragao com movimentacao aleatoria");
+		System.out.println("3 - Dragão com movimentacao aleatoria intercalada com dormir");
 		
-		opcao=s.nextInt();
+		opcao = s.nextInt();
 		boolean dragaoParado=false, dragaoAdormece=false;
 		
 		switch(opcao){

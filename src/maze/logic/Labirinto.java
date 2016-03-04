@@ -2,8 +2,10 @@ package maze.logic;
 
 public class Labirinto {
 	private char layout[][]; //layout[linha][coluna]
+	private Ponto posHeroi;
+	private Ponto posEspada;
+	private Ponto posDragao;
 	
-
 	public Labirinto(){
 		layout = new char[][] {
 			{'X','X','X','X','X','X','X','X','X','X'},
@@ -16,8 +18,31 @@ public class Labirinto {
 			{'X',' ','X','X',' ','X',' ','X',' ','X'},
 			{'X',' ','X','X',' ',' ',' ',' ',' ','X'},
 			{'X','X','X','X','X','X','X','X','X','X'}
-		}; 
-		
+		};
+	}
+
+	public Ponto getPosHeroi() {
+		return posHeroi;
+	}
+
+	public void setPosHeroi(Ponto posHeroi) {
+		this.posHeroi = posHeroi;
+	}
+
+	public Ponto getPosEspada() {
+		return posEspada;
+	}
+
+	public void setPosEspada(Ponto posEspada) {
+		this.posEspada = posEspada;
+	}
+
+	public Ponto getPosDragao() {
+		return posDragao;
+	}
+
+	public void setPosDragao(Ponto posDragao) {
+		this.posDragao = posDragao;
 	}
 
 	public char[][] getLayout() {
@@ -29,23 +54,26 @@ public class Labirinto {
 	}
 
 	public void setHeroi(Heroi heroi) {
-		layout[heroi.getX()][heroi.getY()]= heroi.getSimbolo();
+		layout[heroi.getPosicaoHeroi().getX()][heroi.getPosicaoHeroi().getY()] = heroi.getSimbolo();
+		posHeroi = heroi.getPosicao();
 	}
 	
 	public void setEspada(Espada espada){
-		layout[espada.getX()][espada.getY()]=espada.getSimbolo();
+		layout[espada.getPosicaoEspada().getX()][espada.getPosicaoEspada().getY()] = espada.getSimbolo();
+		posEspada = espada.getPosicao();
 	}
 	
 	public void setDragao(Dragao dragao){
-		layout[dragao.getX()][dragao.getY()]=dragao.getSimbolo();
+		layout[dragao.getPosicaoDragao().getX()][dragao.getPosicaoDragao().getY()] = dragao.getSimbolo();
+		posDragao = dragao.getPosicao();
 	}
 	
-	public char getSimbolo(int x, int y){
-		return layout[x][y];
+	public char getSimbolo(Ponto p){
+		return layout[p.getX()][p.getY()];
 	}
 	
-	public void setSimbolo(int x, int y, char simb){
-		layout[x][y]=simb;
+	public void setSimbolo(Ponto p, char simb){
+		layout[p.getX()][p.getY()] = simb;
 	}
 	
 	public void print(){

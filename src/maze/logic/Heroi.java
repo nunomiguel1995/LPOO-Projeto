@@ -8,10 +8,6 @@ public class Heroi extends Personagem {
 		this.armado=armado;
 	}
 
-	public boolean isArmado() {
-		return armado;
-	}
-
 	public void setArmado(boolean armado) {
 		this.armado = armado;
 	}
@@ -20,64 +16,75 @@ public class Heroi extends Personagem {
 		return armado;
 	}
 	
+	public void setPosicaoHeroi(Ponto p){
+		setPosicao(p);
+	}
+	
+	public Ponto getPosicaoHeroi(){
+		return getPosicao();
+	}
+	
 	public void armaHeroi(Espada espada){
-		int espadaX= espada.getX(),heroix=this.getX();
-		int espadaY= espada.getY(),heroiy=this.getY();
-		if(heroix==espadaX && heroiy==espadaY){
+		Ponto posEspada = espada.getPosicao();
+		Ponto posHeroi = getPosicao();
+		
+		if(posEspada.equals(posHeroi)){
 			this.setSimbolo('A');
 			this.setArmado(true);
 		}		
 	}
 	
 	public int moveHeroi(Labirinto labirinto, String movimento){
-		boolean parede= false;
-		boolean saida=false;
-		int heroix=this.getX();
-		int heroiy=this.getY();
+		boolean parede = false;
+		boolean saida = false;
+		
+		int heroiX = getPosicao().getX(), heroiY = getPosicao().getY();
 		
 		switch(movimento){
 		case "cima":			
-			heroix= heroix-1;
-			if(labirinto.getSimbolo(heroix,heroiy)=='X')
+			heroiX -= 1;
+			if(labirinto.getSimbolo(new Ponto(heroiX,heroiY)) == 'X')
 				parede=true;
-			else if(labirinto.getSimbolo(heroix,heroiy)=='S')
+			else if(labirinto.getSimbolo(new Ponto(heroiX,heroiY)) == 'S')
 				saida=true;
-			else
-				labirinto.setSimbolo(heroix+1, heroiy, ' ');
+			else{
+				labirinto.setSimbolo(new Ponto(heroiX + 1, heroiY), ' ');
+			}
 			break;
 		case "baixo":
-			heroix= heroix+1;
-			if(labirinto.getSimbolo(heroix,heroiy)=='X')
+			heroiX += 1;
+			if(labirinto.getSimbolo(new Ponto(heroiX,heroiY)) == 'X')
 				parede=true;
-			else if(labirinto.getSimbolo(heroix,heroiy)=='S')
+			else if(labirinto.getSimbolo(new Ponto(heroiX,heroiY)) == 'S')
 				saida=true;
 			else
-				labirinto.setSimbolo(heroix-1, heroiy, ' ');
+				labirinto.setSimbolo(new Ponto(heroiX - 1, heroiY), ' ');
 			break;
 		case "esquerda":
-			heroiy=heroiy-1;
-			if(labirinto.getSimbolo(heroix,heroiy)=='X')
+			heroiY -= 1;
+			if(labirinto.getSimbolo(new Ponto(heroiX, heroiY)) == 'X')
 				parede=true;
-			else if(labirinto.getSimbolo(heroix,heroiy)=='S')
+			else if(labirinto.getSimbolo(new Ponto(heroiX, heroiY)) == 'S')
 				saida=true;
 			else
-				labirinto.setSimbolo(heroix, heroiy+1, ' ');
+				labirinto.setSimbolo(new Ponto(heroiX, heroiY + 1), ' ');
 			break;
 		case "direita":
-			heroiy=heroiy+1;
-			if(labirinto.getSimbolo(heroix,heroiy)=='X')
+			heroiY += 1;
+			if(labirinto.getSimbolo(new Ponto(heroiX, heroiY)) == 'X')
 				parede=true;
-			else if(labirinto.getSimbolo(heroix,heroiy)=='S')
+			else if(labirinto.getSimbolo(new Ponto(heroiX, heroiY)) =='S')
 				saida=true;
 			else
-				labirinto.setSimbolo(heroix, heroiy-1, ' ');
+				labirinto.setSimbolo(new Ponto(heroiX, heroiY - 1), ' ');
 			break;	
 		}
 		
 		if(!parede && !saida){
-			this.setX(heroix);
-			this.setY(heroiy);
+			setPosicao(new Ponto(heroiX,heroiY));
+			labirinto.setPosHeroi(new Ponto(heroiX,heroiY));
 		}
+		
 		if(saida)
 			return 1;
 		
@@ -85,9 +92,13 @@ public class Heroi extends Personagem {
 	}
 	
 	public int enfrentaDragao(Dragao dragao){
-		int heroiX=this.getX(), dragaoX=dragao.getX();
-		int heroiY=this.getY(), dragaoY=dragao.getY();
-		boolean combate= ( (dragaoX==heroiX+1 && dragaoY==heroiY) || (dragaoX== heroiX-1 && dragaoY==heroiY) || (dragaoY == heroiY+1 && dragaoX==heroiX)|| (dragaoY== heroiY-1 && dragaoX==heroiX));
+		Ponto posHeroi = getPosicao();
+		Ponto posDragao = dragao.getPosicao();
+		
+		boolean combate = ( (posDragao.getX() == posHeroi.getX() + 1 && posDragao.getY() == posHeroi.getY())
+				|| (posDragao.getX() == posHeroi.getX() - 1 && posDragao.getX() == posHeroi.getX()) 
+				|| (posDragao.getY() == posHeroi.getY() + 1 && posDragao.getX() == posHeroi.getX())
+				|| (posDragao.getY() == posHeroi.getY() - 1 && posDragao.getX() == posHeroi.getX()));
 		
 		if(combate){
 			if(this.getArmado())
