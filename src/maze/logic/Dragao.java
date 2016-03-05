@@ -3,42 +3,42 @@ package maze.logic;
 import java.util.Random;
 
 public class Dragao extends Personagem {
+	private static Random movimentoDragao = new Random(); 
+	private static Random adormece = new Random();
+	
 	private boolean vivo;
 	private boolean cimaEspada;
 	private boolean adormecido;
 	
-	private static Random movimentoDragao = new Random(); 
-	private static Random adormece = new Random();
-	
-	public Dragao(int x, int y, char simbolo,boolean cimaEspada,boolean adormecido){
+	public Dragao(int x, int y, char simbolo, boolean cimaEspada, boolean adormecido){
 		super(x,y,simbolo);
-		vivo=true;
-		this.cimaEspada=cimaEspada;
-		this.adormecido=adormecido;
+		vivo = true;
+		this.cimaEspada = cimaEspada;
+		this.adormecido = adormecido;
 	}
 	
 	public boolean getVivo(){
-		return vivo;
+		return this.vivo;
 	}
 
 	public void setVivo(boolean vivo){
-		this.vivo=vivo;
+		this.vivo = vivo;
 	}
 	
 	public boolean getCimaEspada(){
-		return cimaEspada;
+		return this.cimaEspada;
 	}
 	
 	public void setCimaEspada(boolean cimaEspada){
-		this.cimaEspada=cimaEspada;
+		this.cimaEspada = cimaEspada;
 	}
 	
 	public boolean getAdormecido(){
 		return adormecido;
 	}
 	
-	public Ponto getPosicaoDragao(){
-		return getPosicao();
+	public void setAdormecido(boolean adormecido){
+		this.adormecido = adormecido;
 	}
 	
 	public void moveDragao(Labirinto labirinto){
@@ -92,15 +92,17 @@ public class Dragao extends Personagem {
 				setPosicao(new Ponto(dragaoX, dragaoY));
 				labirinto.setPosDragao(new Ponto(dragaoX,dragaoY));
 			}
-			break;	
+			break;
+		default:
+				break;
 		}				
 	}
 	
 	public void dragaoCimaEspada(Espada espada){
-		Ponto posEspada = espada.getPosicaoEspada();
+		Ponto posEspada = espada.getPosicao();
 		Ponto posDragao = getPosicao();
 
-		boolean emCima=this.getCimaEspada();
+		boolean emCima = this.getCimaEspada();
 		
 		if(posEspada.equals(posDragao) && emCima==false ){
 			this.setCimaEspada(true);
@@ -114,12 +116,8 @@ public class Dragao extends Personagem {
 	}
 	
 	public void adormeceOuAcorda(){
-		int i= adormece.nextInt(6-1)+1;
-		switch(i){
-		case 1:	case 3:	case 5:
-			break;
-		case 2:
-		case 4:
+		int i = adormece.nextInt(6-1)+1;
+		if((i % 2) == 0){
 			if(adormecido){
 				adormecido=false;
 				this.setSimbolo('D');

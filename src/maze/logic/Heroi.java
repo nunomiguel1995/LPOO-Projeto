@@ -3,9 +3,9 @@ package maze.logic;
 public class Heroi extends Personagem {
 	private boolean armado;
 
-	public Heroi(int x,int y,char simb,boolean armado){
+	public Heroi(int x,int y,char simb){
 		super(x,y,simb);
-		this.armado=armado;
+		this.armado = false;
 	}
 
 	public void setArmado(boolean armado) {
@@ -16,24 +16,23 @@ public class Heroi extends Personagem {
 		return armado;
 	}
 	
-	public void setPosicaoHeroi(Ponto p){
-		setPosicao(p);
-	}
-	
-	public Ponto getPosicaoHeroi(){
-		return getPosicao();
-	}
-	
+	/**
+	 * Arma o heroi com a espada 
+	 * @param espada Espada a armar o heroi
+	 */
 	public void armaHeroi(Espada espada){
-		Ponto posEspada = espada.getPosicao();
-		Ponto posHeroi = getPosicao();
-		
-		if(posEspada.equals(posHeroi)){
-			this.setSimbolo('A');
+		if(espada.getPosicao().equals(getPosicao())){
+			setSimbolo('A');
 			this.setArmado(true);
 		}		
 	}
 	
+	/**
+	 * Forca o movimento do heroi.
+	 * @param labirinto Labirinto no qual se encontra o heroi
+	 * @param movimento Direccao do movimento
+	 * @return 1 se o heroi puder sair do labirinto e 0 caso contrario
+	 */
 	public int moveHeroi(Labirinto labirinto, String movimento){
 		boolean parede = false;
 		boolean saida = false;
@@ -82,7 +81,7 @@ public class Heroi extends Personagem {
 		
 		if(!parede && !saida){
 			setPosicao(new Ponto(heroiX,heroiY));
-			labirinto.setPosHeroi(new Ponto(heroiX,heroiY));
+			labirinto.setPosHeroi(getPosicao());
 		}
 		
 		if(saida)
@@ -91,6 +90,11 @@ public class Heroi extends Personagem {
 		return 0;
 	}
 	
+	/**
+	 * Força o Heroi a enfrentar o dragao
+	 * @param dragao Dragao a enfrentar
+	 * @return 0 se nao houver combate, 1 se ganhar e -1 se perder
+	 */
 	public int enfrentaDragao(Dragao dragao){
 		Ponto posHeroi = getPosicao();
 		Ponto posDragao = dragao.getPosicao();
@@ -101,14 +105,14 @@ public class Heroi extends Personagem {
 				|| (posDragao.getY() == posHeroi.getY() - 1 && posDragao.getX() == posHeroi.getX()));
 		
 		if(combate){
-			if(this.getArmado())
+			if(armado)
 				return 1;
 			else if(dragao.getAdormecido())
 				return 0;
 			else
 				return -1;
-		}
-		else
+		}else{
 			return 0;
+		}
 	}
 }

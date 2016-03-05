@@ -14,20 +14,20 @@ public class main {
 		System.out.println("3 - Dragão com movimentacao aleatoria intercalada com dormir");
 		
 		opcao = s.nextInt();
-		boolean dragaoParado=false, dragaoAdormece=false;
+		boolean dragaoParado = false, dragaoAdormece = false;
 		
 		switch(opcao){
 		case 1:
-			 dragaoParado=true;
-			 dragaoAdormece=false;
+			 dragaoParado = true;
+			 dragaoAdormece = false;
 			break;
 		case 2:
-			 dragaoParado=false;
-			 dragaoAdormece=false;
+			 dragaoParado = false;
+			 dragaoAdormece = false;
 			 break;
 		case 3:
-			 dragaoParado=false;
-			 dragaoAdormece=true;
+			 dragaoParado = false;
+			 dragaoAdormece = true;
 			break;			
 		}
 		
@@ -38,9 +38,10 @@ public class main {
 		int gameOver=0;
 
 		while(gameOver==0){
-			gameOver = j.jogada();
+			gameOver = j.getLabirinto().jogada();
 			j.getLabirinto().print();
 		}
 
+		s.close();
 	}	
 }
