@@ -5,102 +5,99 @@ import org.junit.Test;
 import maze.logic.*;
 
 public class TestLabirintoDragaoEstatico {
-	char [][]lab = {{'X','X','X','X','X'},
-			        {'X','E',' ','H','S'},
-			        {'X',' ','X',' ','X'},
-			        {'X',' ',' ','D','X'},
-			        {'X','X','X','X','X'}};
-	
-	boolean dragaoParado = true, dragaoAdormece = false;
-	
+	private char [][]lab = {{'X','X','X','X','X'},
+			{'X','E',' ','H','S'},
+			{'X',' ','X',' ','X'},
+			{'X',' ',' ','D','X'},
+			{'X','X','X','X','X'}};
+
+	private static final int CIMA = 1;
+	private static final int BAIXO = 2;
+	private static final int ESQUERDA = 3;
+	private static final int DIREITA = 4;
+
 	@Test
 	public void testMoveHeroiCelulaVazia() {
-		Labirinto l = new Labirinto(lab,dragaoParado, dragaoAdormece);
-		
-		assertEquals(new Ponto(1,3), l.getPosHeroi());
-		l.getHeroi().moveHeroi(l, "esquerda");
-		assertEquals(new Ponto(1,2), l.getPosHeroi());
+		Jogo j = new Jogo(lab);
+		j.lePosicoes();
+		j.getHeroi().moveHeroi(j.getLabirinto(), ESQUERDA);
+		assertEquals(new Ponto(1,2), j.getHeroi().getPosicao());
 	}
 
 	@Test
 	public void testMoveHeroiParede(){
-		Labirinto l = new Labirinto(lab,dragaoParado, dragaoAdormece);
-		
-		assertEquals(new Ponto(1,3), l.getPosHeroi());
-		l.getHeroi().moveHeroi(l, "cima");
-		assertEquals(new Ponto(1,3), l.getPosHeroi());
+		Jogo j = new Jogo(lab);
+		j.lePosicoes();
+		j.getHeroi().moveHeroi(j.getLabirinto(), CIMA);
+		assertEquals(new Ponto(1,3), j.getHeroi().getPosicao());
 	}
-	
+
 	@Test
 	public void testMoveHeroiEspada(){
-		Labirinto l = new Labirinto(lab,dragaoParado, dragaoAdormece);
-		
-		assertEquals(new Ponto(1,3),l.getPosHeroi());
-		l.getHeroi().moveHeroi(l, "esquerda");
-		l.getHeroi().moveHeroi(l, "esquerda");
-		l.getHeroi().armaHeroi(l.getEspada());
-		assertEquals(true, l.getHeroi().getArmado());
+		Jogo j = new Jogo(lab);
+		j.lePosicoes();
+		j.getHeroi().moveHeroi(j.getLabirinto(), ESQUERDA);
+		j.getHeroi().moveHeroi(j.getLabirinto(), ESQUERDA);
+		j.getHeroi().armaHeroi(j.getEspada());
+		assertTrue(j.getHeroi().isArmado());
 	}
-	
+
 	@Test
 	public void testMoveHeroiDragao(){
-		Labirinto l = new Labirinto(lab,dragaoParado, dragaoAdormece);
-		
-		assertEquals(new Ponto(1,3),l.getPosHeroi());
-		l.getHeroi().moveHeroi(l, "baixo");
-		assertEquals(-1,l.getHeroi().enfrentaDragao(l.getDragao()));
+		Jogo j = new Jogo(lab);
+		j.lePosicoes();
+		j.getHeroi().moveHeroi(j.getLabirinto(), BAIXO);
+		assertEquals(-1,j.getHeroi().enfrentaDragao(j.getDragao()));
 	}
-	
+
 	@Test
 	public void testHeroiMataDragao(){
-		Labirinto l = new Labirinto(lab,dragaoParado, dragaoAdormece);
-		
-		assertEquals(new Ponto(1,3),l.getPosHeroi());
-		l.getHeroi().moveHeroi(l, "esquerda");
-		l.getHeroi().moveHeroi(l, "esquerda");
-		l.getHeroi().moveHeroi(l, "baixo");
-		l.getHeroi().moveHeroi(l, "baixo");
-		l.getHeroi().armaHeroi(l.getEspada());
-		l.getHeroi().moveHeroi(l, "direita");
-		l.getHeroi().moveHeroi(l, "direita");
-		assertEquals(0,l.getHeroi().enfrentaDragao(l.getDragao()));
+		Jogo j = new Jogo(lab);
+		j.lePosicoes();
+		j.getHeroi().moveHeroi(j.getLabirinto(), ESQUERDA);
+		j.getHeroi().moveHeroi(j.getLabirinto(), ESQUERDA);
+		j.getHeroi().armaHeroi(j.getEspada());
+		j.getHeroi().moveHeroi(j.getLabirinto(), DIREITA);
+		j.getHeroi().moveHeroi(j.getLabirinto(), DIREITA);
+		j.getHeroi().moveHeroi(j.getLabirinto(), BAIXO);
+		assertEquals(1,j.getHeroi().enfrentaDragao(j.getDragao()));
 	}
-	
+
 	@Test
 	public void testHeroiMataDragaoSai(){
-		Labirinto l = new Labirinto(lab,dragaoParado, dragaoAdormece);
-
-		assertEquals(new Ponto(1,3),l.getPosHeroi());
-		l.getHeroi().moveHeroi(l, "esquerda");
-		l.getHeroi().moveHeroi(l, "esquerda");
-		l.getHeroi().armaHeroi(l.getEspada());
-		l.getHeroi().moveHeroi(l, "direita");
-		l.getHeroi().moveHeroi(l, "direita");
-		l.getHeroi().moveHeroi(l, "baixo");
-		assertEquals(1, l.getHeroi().enfrentaDragao(l.getDragao()));
-		l.getHeroi().moveHeroi(l, "cima");
-		assertEquals(1, l.getHeroi().moveHeroi(l, "direita"));
+		Jogo j = new Jogo(lab);
+		j.lePosicoes();
+		j.getHeroi().moveHeroi(j.getLabirinto(), ESQUERDA);
+		j.getHeroi().moveHeroi(j.getLabirinto(), ESQUERDA);
+		j.getHeroi().armaHeroi(j.getEspada());
+		j.getHeroi().moveHeroi(j.getLabirinto(), DIREITA);
+		j.getHeroi().moveHeroi(j.getLabirinto(), DIREITA);
+		j.getHeroi().moveHeroi(j.getLabirinto(), BAIXO);
+		assertEquals(1, j.getHeroi().enfrentaDragao(j.getDragao()));
+		j.getHeroi().moveHeroi(j.getLabirinto(), CIMA);
+		j.getHeroi().moveHeroi(j.getLabirinto(), DIREITA);
+		assertEquals(1, j.getHeroi().moveHeroi(j.getLabirinto(), DIREITA));
 	}
-	
+
 	@Test
 	public void testHeroiSaiDesarmado(){
-		Labirinto l = new Labirinto(lab,dragaoParado, dragaoAdormece);
-		
-		assertEquals(new Ponto(1,3),l.getPosHeroi());
-		assertEquals(1, l.getHeroi().moveHeroi(l, "direita"));
-	}
-	
-	@Test
-	public void testHeroiSaiArmado(){
-		Labirinto l = new Labirinto(lab,dragaoParado, dragaoAdormece);
-		
-		assertEquals(new Ponto(1,3),l.getPosHeroi());
-		l.getHeroi().moveHeroi(l, "esquerda");
-		l.getHeroi().moveHeroi(l, "esquerda");
-		l.getHeroi().armaHeroi(l.getEspada());
-		l.getHeroi().moveHeroi(l, "direita");
-		l.getHeroi().moveHeroi(l, "direita");
-		assertEquals(1, l.getHeroi().moveHeroi(l, "direita"));
+		Jogo j = new Jogo(lab);
+		j.lePosicoes();
+		j.getHeroi().moveHeroi(j.getLabirinto(), DIREITA);
+		assertFalse(j.getHeroi().isArmado());
 	}
 
+	@Test
+	public void testHeroiSaiArmado(){
+		Jogo j = new Jogo(lab);
+		j.lePosicoes();
+		j.getHeroi().moveHeroi(j.getLabirinto(), ESQUERDA);
+		j.getHeroi().moveHeroi(j.getLabirinto(), ESQUERDA);
+		j.getHeroi().armaHeroi(j.getEspada());
+		assertTrue(j.getHeroi().isArmado());
+		j.getHeroi().moveHeroi(j.getLabirinto(), DIREITA);
+		j.getHeroi().moveHeroi(j.getLabirinto(), DIREITA);
+		j.getHeroi().moveHeroi(j.getLabirinto(), DIREITA);
+		assertEquals(1, j.getHeroi().moveHeroi(j.getLabirinto(), DIREITA));
+	}
 }

@@ -1,7 +1,11 @@
 package maze.logic;
 
-public class Espada extends Personagem {		
-	public Espada(int x, int y, char simbolo){
-		super(x,y,simbolo);
+public class Espada extends Personagem{
+	public Espada(){
+		super(new Ponto(0,0),'E');
+	}
+	
+	public Espada(Ponto p, char simbolo){
+		super(p,simbolo);
 	}
 }

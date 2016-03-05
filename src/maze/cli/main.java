@@ -5,7 +5,23 @@ import maze.logic.*;
 
 public class main {
 	public static void main(String[] args) {
-		Scanner s= new Scanner(System.in);
+		char[][] mapa = new char[][] {
+			{'X','X','X','X','X','X','X','X','X','X'},
+			{'X','H',' ',' ',' ',' ',' ',' ',' ','X'},
+			{'X',' ','X','X',' ','X',' ','X',' ','X'},
+			{'X','D','X','X',' ','X',' ','X',' ','X'},
+			{'X',' ','X','X',' ','X',' ','X',' ','X'},
+			{'X',' ',' ',' ',' ',' ',' ','X',' ','S'},
+			{'X',' ','X','X',' ','X',' ','X',' ','X'},
+			{'X',' ','X','X',' ','X',' ','X',' ','X'},
+			{'X','E','X','X',' ',' ',' ',' ',' ','X'},
+			{'X','X','X','X','X','X','X','X','X','X'}
+			};
+		
+		Jogo j = new Jogo(mapa);
+		j.lePosicoes(); 
+		
+		Scanner s = new Scanner(System.in);
 		int opcao;
 		
 		System.out.println("Qual a estrategia pretendida (selecione a opcao):");
@@ -14,34 +30,28 @@ public class main {
 		System.out.println("3 - Dragão com movimentacao aleatoria intercalada com dormir");
 		
 		opcao = s.nextInt();
-		boolean dragaoParado = false, dragaoAdormece = false;
 		
 		switch(opcao){
 		case 1:
-			 dragaoParado = true;
-			 dragaoAdormece = false;
+			j.setComportamentoDragao(opcao);
 			break;
 		case 2:
-			 dragaoParado = false;
-			 dragaoAdormece = false;
-			 break;
+			j.setComportamentoDragao(opcao);
+			break;
 		case 3:
-			 dragaoParado = false;
-			 dragaoAdormece = true;
-			break;			
+			j.setComportamentoDragao(opcao);
+			break;
+		default:
+			break;
 		}
 		
-		Jogo j= new Jogo(dragaoParado, dragaoAdormece);
+		int continua = 0;
 		
-		j.getLabirinto().print();
-
-		int gameOver=0;
-
-		while(gameOver==0){
-			gameOver = j.getLabirinto().jogada();
-			j.getLabirinto().print();
+		while(continua == 0){
+			j.imprime();
+			continua = j.jogada(s);
 		}
-
+		
 		s.close();
 	}	
 }

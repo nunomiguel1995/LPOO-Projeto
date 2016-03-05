@@ -1,22 +1,22 @@
 package maze.logic;
 
 public class Personagem {
+	private Ponto posicao;
 	private char simbolo;
-	private Ponto p;
 	
-	public Personagem(int x,int y,char simbolo){
-		this.p = new Ponto(x,y);
+	public Personagem(Ponto p, char simbolo){
+		this.posicao = p;
 		this.simbolo = simbolo;
 	}
 
-	public Ponto getPosicao(){
-		return p;
+	public Ponto getPosicao() {
+		return posicao;
 	}
 
-	public void setPosicao(Ponto p){
-		this.p = p;
+	public void setPosicao(Ponto posicao) {
+		this.posicao = posicao;
 	}
-	
+
 	public char getSimbolo() {
 		return simbolo;
 	}

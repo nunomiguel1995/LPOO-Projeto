@@ -2,27 +2,43 @@ package maze.logic;
 
 import java.util.Random;
 
-public class Dragao extends Personagem {
+public class Dragao extends Personagem{
 	private static Random movimentoDragao = new Random(); 
 	private static Random adormece = new Random();
+	
+	public enum ModoDragao {PARADO,ALEATORIO,DORME_ALEATORIO}
 	
 	private boolean vivo;
 	private boolean cimaEspada;
 	private boolean adormecido;
+	private ModoDragao comportamento;
 	
-	public Dragao(int x, int y, char simbolo, boolean cimaEspada, boolean adormecido){
-		super(x,y,simbolo);
-		vivo = true;
-		this.cimaEspada = cimaEspada;
-		this.adormecido = adormecido;
+	public Dragao(){
+		super(new Ponto(0,0),'D');
+		this.vivo = true;
+		this.cimaEspada = false;
 	}
 	
-	public boolean getVivo(){
+	public Dragao(Ponto p, char simbolo){
+		super(p,simbolo);
+		this.vivo = true;
+		this.cimaEspada = false;
+	}
+	
+	public ModoDragao getComportamento(){
+		return this.comportamento;
+	}
+	
+	public void setComportamento(ModoDragao m){
+		this.comportamento = m;
+	}
+	
+	public boolean isVivo(){
 		return this.vivo;
 	}
-
-	public void setVivo(boolean vivo){
-		this.vivo = vivo;
+	
+	public void setMorto(){
+		this.vivo = false;
 	}
 	
 	public boolean getCimaEspada(){
@@ -41,60 +57,74 @@ public class Dragao extends Personagem {
 		this.adormecido = adormecido;
 	}
 	
+	public void setComportamento(int escolha){
+		switch(escolha){
+		case 1:
+			this.comportamento = ModoDragao.PARADO;
+			break;
+		case 2:
+			this.comportamento = ModoDragao.ALEATORIO;
+			break;
+		case 3:
+			this.comportamento = ModoDragao.DORME_ALEATORIO;
+			break;
+		}
+	}
+	
 	public void moveDragao(Labirinto labirinto){
 		int movimento = movimentoDragao.nextInt(6-1)+1;
 
 		int dragaoX = getPosicao().getX(), dragaoY = getPosicao().getY();
-
+		
 		switch(movimento){
 		case 1:
 			break;
 		case 2: //cima
 			dragaoX -= 1;
-			if(labirinto.getSimbolo(new Ponto(dragaoX, dragaoY)) == 'X')
+			if(labirinto.getConteudo(new Ponto(dragaoX, dragaoY)) == 'X')
 				break;
 			else{
-				labirinto.setSimbolo(new Ponto(dragaoX + 1, dragaoY), ' ');
-				labirinto.setDragao(new Dragao(dragaoX,dragaoY,'D',cimaEspada,adormecido));
+				labirinto.setConteudo(new Ponto(dragaoX + 1, dragaoY), ' ');
+				labirinto.setDragao(new Dragao(new Ponto(dragaoX,dragaoY),'D'));
 				setPosicao(new Ponto(dragaoX, dragaoY));
 				labirinto.setPosDragao(new Ponto(dragaoX,dragaoY));
 			}
 			break;
 		case 3: //baixo
 			dragaoX += 1;
-			if(labirinto.getSimbolo(new Ponto(dragaoX,dragaoY)) == 'X')
+			if(labirinto.getConteudo(new Ponto(dragaoX,dragaoY)) == 'X')
 				break;
 			else{
-				labirinto.setSimbolo(new Ponto(dragaoX - 1, dragaoY), ' ');
-				labirinto.setDragao(new Dragao(dragaoX,dragaoY,'D',cimaEspada,adormecido));
+				labirinto.setConteudo(new Ponto(dragaoX - 1, dragaoY), ' ');
+				labirinto.setDragao(new Dragao(new Ponto(dragaoX,dragaoY),'D'));
 				setPosicao(new Ponto(dragaoX, dragaoY));
 				labirinto.setPosDragao(new Ponto(dragaoX,dragaoY));
 			}
 			break;
 		case 4: // esquerda
 			dragaoY -= 1;
-			if(labirinto.getSimbolo(new Ponto(dragaoX,dragaoY)) == 'X')
+			if(labirinto.getConteudo(new Ponto(dragaoX,dragaoY)) == 'X')
 				break;
 			else{
-				labirinto.setSimbolo(new Ponto(dragaoX, dragaoY + 1), ' ');
-				labirinto.setDragao(new Dragao(dragaoX,dragaoY,'D',cimaEspada,adormecido));
+				labirinto.setConteudo(new Ponto(dragaoX, dragaoY + 1), ' ');
+				labirinto.setDragao(new Dragao(new Ponto(dragaoX,dragaoY),'D'));
 				setPosicao(new Ponto(dragaoX, dragaoY));
 				labirinto.setPosDragao(new Ponto(dragaoX,dragaoY));
 			}
 			break;
 		case 5:
 			dragaoY += 1;
-			if(labirinto.getSimbolo(new Ponto(dragaoX,dragaoY)) == 'X')
+			if(labirinto.getConteudo(new Ponto(dragaoX,dragaoY)) == 'X')
 				break;
 			else{
-				labirinto.setSimbolo(new Ponto(dragaoX, dragaoY - 1), ' ');
-				labirinto.setDragao(new Dragao(dragaoX,dragaoY,'D',cimaEspada,adormecido));
+				labirinto.setConteudo(new Ponto(dragaoX, dragaoY - 1), ' ');
+				labirinto.setDragao(new Dragao(new Ponto(dragaoX,dragaoY),'D'));
 				setPosicao(new Ponto(dragaoX, dragaoY));
 				labirinto.setPosDragao(new Ponto(dragaoX,dragaoY));
 			}
 			break;
 		default:
-				break;
+			break;
 		}				
 	}
 	
