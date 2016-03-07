@@ -1,14 +1,23 @@
 package maze.logic;
 
 public class Labirinto {
-	private char[][] mapa;
-	
+	private char[][] mapa;	
 	private Heroi heroi;
 	private Espada espada;
-	private Dragao dragao;
+	private Dragao dragao[];
+	private int nDragoes;
 	
 	public Labirinto(){
 		this.mapa = new char[][] {{'X'}};
+	}
+	
+	public Labirinto(int altura, int largura, int nDragoes){
+		LabirintoRandom l= new LabirintoRandom(altura, largura,nDragoes);
+		mapa=l.getLab();
+		espada=l.getEspada();
+		heroi=l.getHeroi();
+		dragao=l.getDragao().clone();
+		this.nDragoes=nDragoes;
 	}
 	
 	public Labirinto(char[][] mapa){
@@ -33,14 +42,14 @@ public class Labirinto {
 		this.espada = espada;
 	}
 
-	public Dragao getDragao() {
+	public Dragao[] getDragao() {
 		return this.dragao;
 	}
-
+/*
 	public void setDragao(Dragao dragao) {
 		this.mapa[dragao.getPosicao().getX()][dragao.getPosicao().getY()] = dragao.getSimbolo();
 		this.dragao = dragao;
-	}
+	}*/
 
 	public char[][] getMapa(){
 		return this.mapa;
@@ -74,18 +83,21 @@ public class Labirinto {
 		this.espada.setPosicao(posEspada);
 	}
 
+	/*
 	public Ponto getPosDragao() {
 		return this.dragao.getPosicao();
 	}
-
+*//*
 	public void setPosDragao(Ponto posDragao) {
 		this.dragao.setPosicao(posDragao);
-	}
+	}*/
 	
 	public void atualizaLabirinto(){
-		if(getDragao().isVivo()){
-			setDragao(getDragao());
-		}
-		setHeroi(getHeroi());
+		
+		mapa[espada.getPosicao().getX()][espada.getPosicao().getY()]=espada.getSimbolo();
+		for(int i=0; i<nDragoes;i++){
+			mapa[dragao[i].getPosicao().getX()][dragao[i].getPosicao().getY()]=dragao[i].getSimbolo();
+		}	
+		mapa[heroi.getPosicao().getX()][heroi.getPosicao().getY()]=heroi.getSimbolo();
 	}
 }

@@ -1,4 +1,4 @@
-package maze.test;
+/*package maze.test;
 
 import static org.junit.Assert.*;
 import org.junit.Test;
@@ -100,4 +100,4 @@ public class TestLabirintoDragaoEstatico {
 		j.getHeroi().moveHeroi(j.getLabirinto(), DIREITA);
 		assertEquals(1, j.getHeroi().moveHeroi(j.getLabirinto(), DIREITA));
 	}
-}
+}*/

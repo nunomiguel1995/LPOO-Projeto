@@ -21,10 +21,12 @@ public class Heroi extends Personagem{
 		this.armado = estaArmado;
 	}
 	
-	public void armaHeroi(Espada e){
-		if(e.getPosicao().equals(getPosicao())){
+	public void armaHeroi(Espada e,Labirinto l){
+		if(e.getPosicao().equals(getPosicao()) && armado==false){
 			setSimbolo('A');
 			this.setArmado(true);
+			e.removeEspada();
+			//l[e.getPosicao().getX()][e.getPosicao().getY()]=e.getSimbolo();
 		}		
 	}
 
@@ -91,7 +93,7 @@ public class Heroi extends Personagem{
 		Ponto posDragao = dragao.getPosicao();
 		
 		boolean combate = ( (posDragao.getX() == posHeroi.getX() + 1 && posDragao.getY() == posHeroi.getY())
-				|| (posDragao.getX() == posHeroi.getX() - 1 && posDragao.getX() == posHeroi.getX()) 
+				|| (posDragao.getX() == posHeroi.getX() - 1 && posDragao.getY() == posHeroi.getY()) 
 				|| (posDragao.getY() == posHeroi.getY() + 1 && posDragao.getX() == posHeroi.getX())
 				|| (posDragao.getY() == posHeroi.getY() - 1 && posDragao.getX() == posHeroi.getX()));
 		

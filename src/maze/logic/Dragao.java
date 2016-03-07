@@ -6,12 +6,10 @@ public class Dragao extends Personagem{
 	private static Random movimentoDragao = new Random(); 
 	private static Random adormece = new Random();
 	
-	public enum ModoDragao {PARADO,ALEATORIO,DORME_ALEATORIO}
 	
 	private boolean vivo;
 	private boolean cimaEspada;
 	private boolean adormecido;
-	private ModoDragao comportamento;
 	
 	public Dragao(){
 		super(new Ponto(0,0),'D');
@@ -23,14 +21,6 @@ public class Dragao extends Personagem{
 		super(p,simbolo);
 		this.vivo = true;
 		this.cimaEspada = false;
-	}
-	
-	public ModoDragao getComportamento(){
-		return this.comportamento;
-	}
-	
-	public void setComportamento(ModoDragao m){
-		this.comportamento = m;
 	}
 	
 	public boolean isVivo(){
@@ -57,20 +47,6 @@ public class Dragao extends Personagem{
 		this.adormecido = adormecido;
 	}
 	
-	public void setComportamento(int escolha){
-		switch(escolha){
-		case 1:
-			this.comportamento = ModoDragao.PARADO;
-			break;
-		case 2:
-			this.comportamento = ModoDragao.ALEATORIO;
-			break;
-		case 3:
-			this.comportamento = ModoDragao.DORME_ALEATORIO;
-			break;
-		}
-	}
-	
 	public void moveDragao(Labirinto labirinto){
 		int movimento = movimentoDragao.nextInt(6-1)+1;
 
@@ -85,9 +61,7 @@ public class Dragao extends Personagem{
 				break;
 			else{
 				labirinto.setConteudo(new Ponto(dragaoX + 1, dragaoY), ' ');
-				labirinto.setDragao(new Dragao(new Ponto(dragaoX,dragaoY),'D'));
 				setPosicao(new Ponto(dragaoX, dragaoY));
-				labirinto.setPosDragao(new Ponto(dragaoX,dragaoY));
 			}
 			break;
 		case 3: //baixo
@@ -96,9 +70,7 @@ public class Dragao extends Personagem{
 				break;
 			else{
 				labirinto.setConteudo(new Ponto(dragaoX - 1, dragaoY), ' ');
-				labirinto.setDragao(new Dragao(new Ponto(dragaoX,dragaoY),'D'));
 				setPosicao(new Ponto(dragaoX, dragaoY));
-				labirinto.setPosDragao(new Ponto(dragaoX,dragaoY));
 			}
 			break;
 		case 4: // esquerda
@@ -107,9 +79,7 @@ public class Dragao extends Personagem{
 				break;
 			else{
 				labirinto.setConteudo(new Ponto(dragaoX, dragaoY + 1), ' ');
-				labirinto.setDragao(new Dragao(new Ponto(dragaoX,dragaoY),'D'));
 				setPosicao(new Ponto(dragaoX, dragaoY));
-				labirinto.setPosDragao(new Ponto(dragaoX,dragaoY));
 			}
 			break;
 		case 5:
@@ -118,9 +88,7 @@ public class Dragao extends Personagem{
 				break;
 			else{
 				labirinto.setConteudo(new Ponto(dragaoX, dragaoY - 1), ' ');
-				labirinto.setDragao(new Dragao(new Ponto(dragaoX,dragaoY),'D'));
 				setPosicao(new Ponto(dragaoX, dragaoY));
-				labirinto.setPosDragao(new Ponto(dragaoX,dragaoY));
 			}
 			break;
 		default:

@@ -5,6 +5,9 @@ import maze.logic.*;
 
 public class main {
 	public static void main(String[] args) {
+		Scanner s = new Scanner(System.in);
+		int altura,largura, nDragoes, opcao;
+		
 		char[][] mapa = new char[][] {
 			{'X','X','X','X','X','X','X','X','X','X'},
 			{'X','H',' ',' ',' ',' ',' ',' ',' ','X'},
@@ -18,40 +21,32 @@ public class main {
 			{'X','X','X','X','X','X','X','X','X','X'}
 			};
 		
-		Jogo j = new Jogo(mapa);
-		j.lePosicoes(); 
+	
+		System.out.println("Escolha as dimensoes do labirinto:");
+		System.out.print("Altura: ");
+		altura=s.nextInt();
+		System.out.print("Largura: ");
+		largura=s.nextInt();
+		System.out.print("Numero de Dragoes a enfrentar: ");
+		nDragoes=s.nextInt();
 		
-		Scanner s = new Scanner(System.in);
-		int opcao;
-		
+		Jogo j = new Jogo(altura,largura,nDragoes); 
+			
 		System.out.println("Qual a estrategia pretendida (selecione a opcao):");
 		System.out.println("1 - Dragao parado");
 		System.out.println("2 - Dragao com movimentacao aleatoria");
 		System.out.println("3 - Dragão com movimentacao aleatoria intercalada com dormir");
 		
 		opcao = s.nextInt();
-		
-		switch(opcao){
-		case 1:
-			j.setComportamentoDragao(opcao);
-			break;
-		case 2:
-			j.setComportamentoDragao(opcao);
-			break;
-		case 3:
-			j.setComportamentoDragao(opcao);
-			break;
-		default:
-			break;
-		}
-		
+		j.setComportamentoDragao(opcao);
+	
 		int continua = 0;
-		
 		while(continua == 0){
 			j.imprime();
 			continua = j.jogada(s);
 		}
 		
 		s.close();
+		
 	}	
 }
