@@ -108,6 +108,10 @@ public class Jogo {
 			if(labirinto.getDragao()[i].isVivo()){
 				if(comportamentoDragao == ModoDragao.DORME_ALEATORIO){
 					labirinto.getDragao()[i].adormeceOuAcorda();
+					if(!labirinto.getDragao()[i].getAdormecido()){
+						labirinto.getDragao()[i].moveDragao(labirinto);
+						labirinto.getDragao()[i].dragaoCimaEspada(labirinto.getEspada());
+					}
 				}
 
 				if(comportamentoDragao == ModoDragao.ALEATORIO){
