@@ -2,6 +2,8 @@ package maze.cli;
 import java.util.Scanner;
 
 import maze.logic.*;
+import maze.logic.Jogo.Direcao;
+import maze.logic.Jogo.EstadoJogo;
 
 public class main {
 	public static void main(String[] args) {
@@ -40,13 +42,26 @@ public class main {
 		opcao = s.nextInt();
 		j.setComportamentoDragao(opcao);
 	
-		int continua = 0;
-		while(continua == 0){
+		int direcao;
+		while(j.getEstado() != EstadoJogo.PERDEU && j.getEstado() != EstadoJogo.GANHOU){
 			j.imprime();
-			continua = j.jogada(s);
-		}
-		
-		s.close();
-		
-	}	
+			System.out.println("1 - Cima");
+			System.out.println("2 - Baixo");
+			System.out.println("3 - Esquerda");
+			System.out.println("4 - Direita");
+			System.out.print("Escolha a direcao: ");	
+			direcao = s.nextInt();
+			System.out.println();
+			switch(direcao){
+			case 1: j.jogada(Direcao.CIMA); break;
+			case 2: j.jogada(Direcao.BAIXO); break;
+			case 3: j.jogada(Direcao.ESQUERDA); break;
+			case 4: j.jogada(Direcao.DIREITA); break;
+			default: break;
+			}
+			if(j.getEstado() != EstadoJogo.INICIAL)
+				System.out.println(j.imprimeEstado());
+		}		
+		s.close();		
+	}
 }

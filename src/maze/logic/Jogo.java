@@ -4,9 +4,13 @@ import java.util.Scanner;
 
 public class Jogo {
 	public enum ModoDragao {PARADO,ALEATORIO,DORME_ALEATORIO}
+	public enum EstadoJogo {GANHOU,PERDEU,SAIDA_FECHADA,INICIAL} 
+	public enum Direcao {CIMA, BAIXO, ESQUERDA, DIREITA}
 	
 	private Labirinto labirinto;
 	private ModoDragao comportamentoDragao;
+	private EstadoJogo estado;
+	
 
 	
 /*	public Jogo(){
@@ -25,6 +29,7 @@ public class Jogo {
 	
 	public Jogo(int altura, int largura,int ndragoes){
 		this.labirinto = new Labirinto(altura,largura,ndragoes);
+		estado=EstadoJogo.INICIAL;
 	}
 	
 	public Labirinto getLabirinto(){
@@ -56,6 +61,14 @@ public class Jogo {
 		}
 	}*/
 	
+	public EstadoJogo getEstado() {
+		return estado;
+	}
+
+	public void setEstado(EstadoJogo estado) {
+		this.estado = estado;
+	}
+
 	public void setComportamentoDragao(int escolha){
 		if(escolha == 1)
 			comportamentoDragao=ModoDragao.PARADO;
@@ -80,25 +93,14 @@ public class Jogo {
 		return b;
 	}
 	
-	public int jogada(Scanner s){
-		int direcao;
-		
-		System.out.println("1 - Cima");
-		System.out.println("2 - Baixo");
-		System.out.println("3 - Esquerda");
-		System.out.println("4 - Direita");
-		System.out.print("Escolha a direcao: ");
-		
-		direcao = s.nextInt();
-		System.out.println();
-		
+	public void jogada(Direcao direcao){	
 		if(labirinto.getHeroi().moveHeroi(this.labirinto, direcao) == 1){
 			if(dagroesDerrotados()){
-				System.out.println("Parabens, ganhou o jogo!");
-				return 1;
+				setEstado(EstadoJogo.GANHOU);
+				return;
 			}else{
-				System.out.println("Antes de sair tem de derrotar o Dragao.");
-				return 0;
+				setEstado(EstadoJogo.SAIDA_FECHADA);
+				return;
 			}
 		}
 
@@ -124,17 +126,16 @@ public class Jogo {
 				case 1:
 					labirinto.getDragao()[i].setSimbolo(' ');
 					labirinto.getDragao()[i].setMorto();
-					System.out.println("Derrotou o Dragao!");
 					break;
 				case -1:
-					System.out.println("Perdeu o jogo! Foi derrotado pelo Dragao!");
-					return -1;
+					setEstado(EstadoJogo.PERDEU);
+					return;
 				}
 			}
 		}
 
 		this.labirinto.atualizaLabirinto();
-		return 0;
+		return;
 	}
 	
 	public void imprime() {
@@ -144,5 +145,31 @@ public class Jogo {
 			}
 			System.out.println();
 		}
+	}
+	
+	
+	public String toString(){
+		String str = "";
+		for(int i=0; i< labirinto.getMapa().length;i++){
+			for(int j=0; j< labirinto.getMapa()[i].length;j++){
+				str+=labirinto.getMapa()[i][j];
+				str+=" ";
+			}
+			str+="\n";
+		}
+		return str;
+	}
+	
+	public String imprimeEstado(){
+		String str="";
+		if(estado == EstadoJogo.GANHOU)
+			 str="Parabens, ganhou o jogo!";
+		else if(estado == EstadoJogo.PERDEU)
+			 str="Foi derrotado! Perdeu o jogo";
+		else if(estado == EstadoJogo.SAIDA_FECHADA)
+			 str="Antes de sair tem de derrotar o dragao";
+		
+		return str;
+		
 	}
 }

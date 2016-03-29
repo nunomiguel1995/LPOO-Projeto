@@ -1,5 +1,7 @@
 package maze.logic;
 
+import maze.logic.Jogo.Direcao;
+
 public class Heroi extends Personagem{
 	private boolean armado;
 	
@@ -30,14 +32,14 @@ public class Heroi extends Personagem{
 		}		
 	}
 
-	public int moveHeroi(Labirinto l, int direcao){
+	public int moveHeroi(Labirinto l, Direcao direcao){
 		boolean parede = false;
 		boolean saida = false;
 		
 		int heroiX = getPosicao().getX(), heroiY = getPosicao().getY();
 		
-		switch(direcao){
-		case 1:			
+		
+		if(direcao == Direcao.CIMA){			
 			heroiX -= 1;
 			if(l.getConteudo(new Ponto(heroiX,heroiY)) == 'X')
 				parede = true;
@@ -46,8 +48,8 @@ public class Heroi extends Personagem{
 			else{
 				l.setConteudo(new Ponto(heroiX + 1, heroiY), ' ');
 			}
-			break;
-		case 2:
+		}
+		else if(direcao== Direcao.BAIXO){
 			heroiX += 1;
 			if(l.getConteudo(new Ponto(heroiX,heroiY)) == 'X')
 				parede = true;
@@ -55,8 +57,8 @@ public class Heroi extends Personagem{
 				saida = true;
 			else
 				l.setConteudo(new Ponto(heroiX - 1, heroiY), ' ');
-			break;
-		case 3:
+		}
+		else if(direcao == Direcao.ESQUERDA){
 			heroiY -= 1;
 			if(l.getConteudo(new Ponto(heroiX, heroiY)) == 'X')
 				parede = true;
@@ -64,16 +66,15 @@ public class Heroi extends Personagem{
 				saida = true;
 			else
 				l.setConteudo(new Ponto(heroiX, heroiY + 1), ' ');
-			break;
-		case 4:
+		}
+		else if(direcao == Direcao.DIREITA){
 			heroiY += 1;
 			if(l.getConteudo(new Ponto(heroiX, heroiY)) == 'X')
 				parede = true;
 			else if(l.getConteudo(new Ponto(heroiX, heroiY)) == 'S')
 				saida = true;
 			else
-				l.setConteudo(new Ponto(heroiX, heroiY - 1), ' ');
-			break;	
+				l.setConteudo(new Ponto(heroiX, heroiY - 1), ' ');	
 		}
 		
 		if(!parede && !saida){
