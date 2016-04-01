@@ -10,23 +10,7 @@ public class Jogo {
 	private Labirinto labirinto;
 	private ModoDragao comportamentoDragao;
 	private EstadoJogo estado;
-	
-
-	
-/*	public Jogo(){
-		this.labirinto = new Labirinto();
-		this.heroi = new Heroi(new Ponto(0,0),'H');
-		this.dragao = new Dragao(new Ponto(0,0),'D');
-		this.espada = new Espada(new Ponto(0,0),'E');
-	}
-	
-	public Jogo(char[][] mapa){
-		this.labirinto = new Labirinto(mapa);
-		this.heroi = new Heroi(new Ponto(0,0),'H');
-		this.dragao = new Dragao(new Ponto(0,0),'D');
-		this.espada = new Espada(new Ponto(0,0),'E');
-	}*/
-	
+		
 	public Jogo(int altura, int largura,int ndragoes){
 		this.labirinto = new Labirinto(altura,largura,ndragoes);
 		estado=EstadoJogo.INICIAL;
@@ -39,27 +23,6 @@ public class Jogo {
 	public void setLabirinto(Labirinto labirinto){
 		this.labirinto = labirinto;
 	}
-	
-	
-/*
-	public void lePosicoes(){
-		char[][] mapa = this.labirinto.getMapa();
-		
-		for(int i = 0; i < mapa.length; i++){
-			for(int j = 0; j < mapa[i].length; j++){
-				if(mapa[i][j] == 'H'){
-					this.heroi.setPosicao(new Ponto(i,j));
-					this.labirinto.setHeroi(heroi);
-				}else if(mapa[i][j] == 'D'){
-					this.dragao.setPosicao(new Ponto(i,j));
-					this.labirinto.setDragao(dragao);
-				}else if(mapa[i][j] == 'E'){
-					this.espada.setPosicao(new Ponto(i,j));
-					this.labirinto.setEspada(espada);
-				}
-			}
-		}
-	}*/
 	
 	public EstadoJogo getEstado() {
 		return estado;

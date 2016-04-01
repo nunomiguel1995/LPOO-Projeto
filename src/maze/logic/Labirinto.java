@@ -45,11 +45,6 @@ public class Labirinto {
 	public Dragao[] getDragao() {
 		return this.dragao;
 	}
-/*
-	public void setDragao(Dragao dragao) {
-		this.mapa[dragao.getPosicao().getX()][dragao.getPosicao().getY()] = dragao.getSimbolo();
-		this.dragao = dragao;
-	}*/
 
 	public char[][] getMapa(){
 		return this.mapa;
@@ -83,15 +78,6 @@ public class Labirinto {
 		this.espada.setPosicao(posEspada);
 	}
 
-	/*
-	public Ponto getPosDragao() {
-		return this.dragao.getPosicao();
-	}
-*//*
-	public void setPosDragao(Ponto posDragao) {
-		this.dragao.setPosicao(posDragao);
-	}*/
-	
 	public void atualizaLabirinto(){
 		
 		mapa[espada.getPosicao().getX()][espada.getPosicao().getY()]=espada.getSimbolo();

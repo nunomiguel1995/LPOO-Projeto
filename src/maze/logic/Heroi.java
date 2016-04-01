@@ -28,7 +28,6 @@ public class Heroi extends Personagem{
 			setSimbolo('A');
 			this.setArmado(true);
 			e.removeEspada();
-			//l[e.getPosicao().getX()][e.getPosicao().getY()]=e.getSimbolo();
 		}		
 	}
 
