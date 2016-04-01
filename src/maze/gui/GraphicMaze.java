@@ -86,24 +86,24 @@ public class GraphicMaze {
 		frame.getContentPane().add(TipoDragoes);
 		
 		String[] tipoDragoes= {"Estáticos", "Movimentação aleatória", "Movimentação e adormecer"};
-		JComboBox cbTipoDragoes = new JComboBox(tipoDragoes);
+		final JComboBox cbTipoDragoes = new JComboBox(tipoDragoes);
 		cbTipoDragoes.setBounds(193, 105, 257, 20);
 		frame.getContentPane().add(cbTipoDragoes);
 		
-		JLabel GameState = new JLabel("Pode gerar um novo Labirinto!");
+		final JLabel GameState = new JLabel("Pode gerar um novo Labirinto!");
 		GameState.setBounds(41, 364, 279, 14);
 		frame.getContentPane().add(GameState);
 		
-		JTextPane textArea = new JTextPane();
+		final JTextPane textArea = new JTextPane();
 		textArea.setFont(new Font("Courier New", Font.PLAIN, 11));
 		textArea.setEditable(false);
 		textArea.setBounds(41, 136, 347, 217);
 		frame.getContentPane().add(textArea);
 		
-		JButton btnCima = new JButton("Cima");
-		JButton btnEsquerda = new JButton("Esquerda");
-		JButton btnDireita = new JButton("Direita");
-		JButton btnBaixo = new JButton("Baixo");
+		final JButton btnCima = new JButton("Cima");
+		final JButton btnEsquerda = new JButton("Esquerda");
+		final JButton btnDireita = new JButton("Direita");
+		final JButton btnBaixo = new JButton("Baixo");
 		
 		
 		btnCima.setBounds(510, 181, 79, 33);
