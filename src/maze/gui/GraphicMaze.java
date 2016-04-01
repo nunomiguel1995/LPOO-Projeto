@@ -6,29 +6,26 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 
-import java.awt.BorderLayout;
 import javax.swing.JTextField;
 import javax.swing.JComboBox;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
-import javax.swing.JTextPane;
 
 import maze.logic.Jogo;
 import maze.logic.Jogo.Direcao;
 import maze.logic.Jogo.EstadoJogo;
 
-import java.awt.Font;
-import java.awt.TextArea;
 
-public class GraphicMaze {
+public class GraphicMaze{
 
+	private GraphicPanel panel;
 	private JFrame frame;
 	private JTextField fldLargura;
 	private JTextField fldNumeroDragoes;
 	private JTextField fldAltura;
 	private Jogo j;
-
+	
 	/**
 	 * Launch the application.
 	 */
@@ -48,7 +45,7 @@ public class GraphicMaze {
 	/**
 	 * Create the application.
 	 */
-	public GraphicMaze() {
+	public GraphicMaze() {		
 		initialize();
 	}
 
@@ -94,12 +91,6 @@ public class GraphicMaze {
 		GameState.setBounds(41, 364, 279, 14);
 		frame.getContentPane().add(GameState);
 		
-		final JTextPane textArea = new JTextPane();
-		textArea.setFont(new Font("Courier New", Font.PLAIN, 11));
-		textArea.setEditable(false);
-		textArea.setBounds(41, 136, 347, 217);
-		frame.getContentPane().add(textArea);
-		
 		final JButton btnCima = new JButton("Cima");
 		final JButton btnEsquerda = new JButton("Esquerda");
 		final JButton btnDireita = new JButton("Direita");
@@ -112,7 +103,8 @@ public class GraphicMaze {
 		btnCima.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				j.jogada(Direcao.CIMA);
-				textArea.setText(j.toString());
+				panel.setJogo(j);
+				panel.repaint();
 				
 				if(j.imprimeEstado()== "")
 					GameState.setText("Pode jogar!");
@@ -135,7 +127,8 @@ public class GraphicMaze {
 		btnEsquerda.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				j.jogada(Direcao.ESQUERDA);
-				textArea.setText(j.toString());
+				panel.setJogo(j);
+				panel.repaint();
 				
 				if(j.imprimeEstado()== "")
 					GameState.setText("Pode jogar!");
@@ -157,7 +150,8 @@ public class GraphicMaze {
 		btnDireita.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				j.jogada(Direcao.DIREITA);
-				textArea.setText(j.toString());
+				panel.setJogo(j);
+				panel.repaint();
 				
 				if(j.imprimeEstado()== "")
 					GameState.setText("Pode jogar!");
@@ -179,7 +173,8 @@ public class GraphicMaze {
 		btnBaixo.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				j.jogada(Direcao.BAIXO);
-				textArea.setText(j.toString());
+				panel.setJogo(j);
+				panel.repaint();
 				
 				if(j.imprimeEstado()== "")
 					GameState.setText("Pode jogar!");
@@ -219,6 +214,7 @@ public class GraphicMaze {
 					return;
 				}
 				j = new Jogo(altura,largura,nDragoes);
+				
 				switch(opcao){
 				case "Estáticos": 
 					j.setComportamentoDragao(1);
@@ -231,7 +227,12 @@ public class GraphicMaze {
 					break;
 				}
 				
-				textArea.setText(j.toString());
+				panel = new GraphicPanel();
+				panel.setBounds(37, 133, 393, 221);
+				frame.getContentPane().add(panel);
+				panel.setJogo(j);
+				panel.repaint();
+				
 				GameState.setText("Pode jogar!");
 				
 				btnCima.setEnabled(true);
