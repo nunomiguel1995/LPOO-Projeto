@@ -10,6 +10,8 @@ import javax.swing.JTextField;
 import javax.swing.JComboBox;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 import java.awt.event.ActionEvent;
 
 import maze.logic.Jogo;
@@ -17,7 +19,7 @@ import maze.logic.Jogo.Direcao;
 import maze.logic.Jogo.EstadoJogo;
 
 
-public class GraphicMaze{
+public class GraphicMaze implements KeyListener{
 
 	private GraphicPanel panel;
 	private JFrame frame;
@@ -45,7 +47,7 @@ public class GraphicMaze{
 	/**
 	 * Create the application.
 	 */
-	public GraphicMaze() {		
+	public GraphicMaze() {
 		initialize();
 	}
 
@@ -106,10 +108,12 @@ public class GraphicMaze{
 				panel.setJogo(j);
 				panel.repaint();
 				
-				if(j.imprimeEstado()== "")
+				if(j.imprimeEstado() == "")
 					GameState.setText("Pode jogar!");
-				else
-					GameState.setText(j.imprimeEstado());	
+				else{
+					JOptionPane.showMessageDialog(frame, j.imprimeEstado());
+					GameState.setText(j.imprimeEstado());
+				}
 				
 				if(j.getEstado() == EstadoJogo.PERDEU || j.getEstado() == EstadoJogo.GANHOU){
 					btnCima.setEnabled(false);
@@ -120,7 +124,6 @@ public class GraphicMaze{
 			}
 		});
 		
-		
 		btnEsquerda.setBounds(681, 225, 93, 33);
 		frame.getContentPane().add(btnEsquerda);
 		btnEsquerda.setEnabled(false);
@@ -130,10 +133,12 @@ public class GraphicMaze{
 				panel.setJogo(j);
 				panel.repaint();
 				
-				if(j.imprimeEstado()== "")
+				if(j.imprimeEstado() == "")
 					GameState.setText("Pode jogar!");
-				else
+				else{
+					JOptionPane.showMessageDialog(frame, j.imprimeEstado());
 					GameState.setText(j.imprimeEstado());
+				}
 				
 				if(j.getEstado() == EstadoJogo.PERDEU || j.getEstado() == EstadoJogo.GANHOU){
 					btnCima.setEnabled(false);
@@ -153,10 +158,12 @@ public class GraphicMaze{
 				panel.setJogo(j);
 				panel.repaint();
 				
-				if(j.imprimeEstado()== "")
+				if(j.imprimeEstado() == "")
 					GameState.setText("Pode jogar!");
-				else
+				else{
+					JOptionPane.showMessageDialog(frame, j.imprimeEstado());
 					GameState.setText(j.imprimeEstado());
+				}
 				
 				if(j.getEstado() == EstadoJogo.PERDEU || j.getEstado() == EstadoJogo.GANHOU){
 					btnCima.setEnabled(false);
@@ -176,10 +183,12 @@ public class GraphicMaze{
 				panel.setJogo(j);
 				panel.repaint();
 				
-				if(j.imprimeEstado()== "")
+				if(j.imprimeEstado() == "")
 					GameState.setText("Pode jogar!");
-				else
+				else{
+					JOptionPane.showMessageDialog(frame, j.imprimeEstado());
 					GameState.setText(j.imprimeEstado());
+				}
 				
 				if(j.getEstado() == EstadoJogo.PERDEU || j.getEstado() == EstadoJogo.GANHOU){
 					btnCima.setEnabled(false);
@@ -202,7 +211,8 @@ public class GraphicMaze{
 				nDragoes= Integer.parseInt(fldNumeroDragoes.getText());
 				opcao= (String) cbTipoDragoes.getSelectedItem();
 				
-				if(altura<0 || largura < 0 || nDragoes <= 0 || altura > 21 || largura > 25)
+				if(altura<= 3|| largura <= 3 || nDragoes <= 0 
+						|| altura > 21 || largura > 25 || (altura % 2) == 0 || (largura %2) == 0)
 					throw new IllegalArgumentException();
 				}
 				catch(NumberFormatException ex){
@@ -231,6 +241,7 @@ public class GraphicMaze{
 				panel.setBounds(37, 133, 634, 525);
 				frame.getContentPane().add(panel);
 				panel.setJogo(j);
+				panel.requestFocus();
 				panel.repaint();
 				
 				GameState.setText("Pode jogar!");
@@ -252,11 +263,41 @@ public class GraphicMaze{
 		});
 		btnTerminarPrograma.setBounds(698, 78, 162, 44);
 		frame.getContentPane().add(btnTerminarPrograma);
-		
+
 		fldAltura = new JTextField();
 		fldAltura.setText("11");
 		fldAltura.setBounds(240, 32, 32, 20);
 		frame.getContentPane().add(fldAltura);
 		fldAltura.setColumns(10);	
 	}
+
+	@Override
+	public void keyPressed(KeyEvent k) {
+		switch(k.getKeyCode()){
+		case KeyEvent.VK_UP:
+			j.jogada(Direcao.ESQUERDA);
+			panel.repaint();
+			break;
+		case KeyEvent.VK_DOWN:
+			j.jogada(Direcao.DIREITA);
+			panel.repaint();
+			break;
+		case KeyEvent.VK_LEFT:
+			j.jogada(Direcao.CIMA);
+			panel.repaint();
+			break;
+		case KeyEvent.VK_RIGHT:
+			j.jogada(Direcao.BAIXO);
+			panel.repaint();
+			break;
+		default:
+			break;
+		}
+	}
+
+	@Override
+	public void keyReleased(KeyEvent arg0) {}
+
+	@Override
+	public void keyTyped(KeyEvent arg0) {}
 }

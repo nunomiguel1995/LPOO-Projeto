@@ -2,17 +2,24 @@ package maze.gui;
 
 import java.awt.Graphics;
 import java.awt.Image;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 
 import javax.swing.ImageIcon;
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
 import maze.logic.Jogo;
+import maze.logic.Jogo.Direcao;
+import maze.logic.Jogo.EstadoJogo;
 
-public class GraphicPanel extends JPanel{
+public class GraphicPanel extends JPanel implements KeyListener{
 
 	private int width = 25, height = 25;
 	private Image hero, armedHero, sword, dragon, wall, floor, exit, sleepDragon;
 	private Jogo j;
+	private String state = "";
 	
 	/**
 	 * Create the application.
@@ -35,6 +42,8 @@ public class GraphicPanel extends JPanel{
 		floor = floor.getScaledInstance(width, height, 1);
 		exit = exit.getScaledInstance(width, height, 1);
 		sleepDragon = sleepDragon.getScaledInstance(width, height, 1);
+		
+		addKeyListener(this);
 	}
 	
 	public void setJogo(Jogo j){
@@ -70,4 +79,38 @@ public class GraphicPanel extends JPanel{
 		}
 	}
 
+	@Override
+	public void keyPressed(KeyEvent k) {
+		switch(k.getKeyCode()){
+		case KeyEvent.VK_UP:
+			j.jogada(Direcao.ESQUERDA);
+			repaint();
+			break;
+		case KeyEvent.VK_DOWN:
+			j.jogada(Direcao.DIREITA);
+			repaint();
+			break;
+		case KeyEvent.VK_LEFT:
+			j.jogada(Direcao.CIMA);
+			repaint();
+			break;
+		case KeyEvent.VK_RIGHT:
+			j.jogada(Direcao.BAIXO);
+			repaint();
+			break;
+		default:
+			break;
+		}
+		
+		if(j.getEstado() == EstadoJogo.PERDEU || j.getEstado() == EstadoJogo.GANHOU){
+			JOptionPane.showMessageDialog(this, j.imprimeEstado());
+			removeKeyListener(this);
+		}
+	}
+
+	@Override
+	public void keyReleased(KeyEvent k) {}
+
+	@Override
+	public void keyTyped(KeyEvent k) {}
 }
