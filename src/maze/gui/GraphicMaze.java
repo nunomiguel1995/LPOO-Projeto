@@ -54,7 +54,7 @@ public class GraphicMaze{
 	 */
 	private void initialize() {	
 		frame = new JFrame();
-		frame.setBounds(100, 100, 696, 425);
+		frame.setBounds(100, 100, 931, 732);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.getContentPane().setLayout(null);
 		
@@ -88,7 +88,7 @@ public class GraphicMaze{
 		frame.getContentPane().add(cbTipoDragoes);
 		
 		final JLabel GameState = new JLabel("Pode gerar um novo Labirinto!");
-		GameState.setBounds(41, 364, 279, 14);
+		GameState.setBounds(41, 668, 279, 14);
 		frame.getContentPane().add(GameState);
 		
 		final JButton btnCima = new JButton("Cima");
@@ -97,12 +97,12 @@ public class GraphicMaze{
 		final JButton btnBaixo = new JButton("Baixo");
 		
 		
-		btnCima.setBounds(510, 181, 79, 33);
+		btnCima.setBounds(739, 181, 79, 33);
 		frame.getContentPane().add(btnCima);
 		btnCima.setEnabled(false);
 		btnCima.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				j.jogada(Direcao.CIMA);
+				j.jogada(Direcao.ESQUERDA);
 				panel.setJogo(j);
 				panel.repaint();
 				
@@ -121,12 +121,12 @@ public class GraphicMaze{
 		});
 		
 		
-		btnEsquerda.setBounds(440, 225, 93, 33);
+		btnEsquerda.setBounds(681, 225, 93, 33);
 		frame.getContentPane().add(btnEsquerda);
 		btnEsquerda.setEnabled(false);
 		btnEsquerda.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				j.jogada(Direcao.ESQUERDA);
+				j.jogada(Direcao.CIMA);
 				panel.setJogo(j);
 				panel.repaint();
 				
@@ -144,12 +144,12 @@ public class GraphicMaze{
 			}
 		});
 		
-		btnDireita.setBounds(566, 225, 93, 33);
+		btnDireita.setBounds(795, 225, 93, 33);
 		frame.getContentPane().add(btnDireita);
 		btnDireita.setEnabled(false);
 		btnDireita.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				j.jogada(Direcao.DIREITA);
+				j.jogada(Direcao.BAIXO);
 				panel.setJogo(j);
 				panel.repaint();
 				
@@ -167,12 +167,12 @@ public class GraphicMaze{
 			}
 		});
 		
-		btnBaixo.setBounds(510, 269, 79, 33);
+		btnBaixo.setBounds(739, 267, 79, 33);
 		frame.getContentPane().add(btnBaixo);
 		btnBaixo.setEnabled(false);
 		btnBaixo.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				j.jogada(Direcao.BAIXO);
+				j.jogada(Direcao.DIREITA);
 				panel.setJogo(j);
 				panel.repaint();
 				
@@ -202,7 +202,7 @@ public class GraphicMaze{
 				nDragoes= Integer.parseInt(fldNumeroDragoes.getText());
 				opcao= (String) cbTipoDragoes.getSelectedItem();
 				
-				if(altura<0 || largura < 0 || nDragoes < 0)
+				if(altura<0 || largura < 0 || nDragoes <= 0 || altura > 21 || largura > 25)
 					throw new IllegalArgumentException();
 				}
 				catch(NumberFormatException ex){
@@ -210,7 +210,7 @@ public class GraphicMaze{
 					return;
 				}
 				catch(IllegalArgumentException ex){
-					JOptionPane.showMessageDialog(frame, "Números não podem ser negativos");
+					JOptionPane.showMessageDialog(frame, "Números inválidos");
 					return;
 				}
 				j = new Jogo(altura,largura,nDragoes);
@@ -228,7 +228,7 @@ public class GraphicMaze{
 				}
 				
 				panel = new GraphicPanel();
-				panel.setBounds(37, 133, 393, 221);
+				panel.setBounds(37, 133, 634, 525);
 				frame.getContentPane().add(panel);
 				panel.setJogo(j);
 				panel.repaint();
@@ -241,7 +241,7 @@ public class GraphicMaze{
 				btnEsquerda.setEnabled(true);
 			}
 		});
-		btnGerarLabirinto.setBounds(486, 34, 162, 33);
+		btnGerarLabirinto.setBounds(698, 26, 162, 33);
 		frame.getContentPane().add(btnGerarLabirinto);
 		
 		JButton btnTerminarPrograma = new JButton("Terminar Programa");
@@ -250,7 +250,7 @@ public class GraphicMaze{
 				System.exit(0);
 			}
 		});
-		btnTerminarPrograma.setBounds(486, 78, 162, 44);
+		btnTerminarPrograma.setBounds(698, 78, 162, 44);
 		frame.getContentPane().add(btnTerminarPrograma);
 		
 		fldAltura = new JTextField();
