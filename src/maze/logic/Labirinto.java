@@ -86,4 +86,8 @@ public class Labirinto {
 		}	
 		mapa[heroi.getPosicao().getX()][heroi.getPosicao().getY()]=heroi.getSimbolo();
 	}
+	
+	public void setDragoes(Dragao[] d){
+		this.dragao=d;
+	}
 }
