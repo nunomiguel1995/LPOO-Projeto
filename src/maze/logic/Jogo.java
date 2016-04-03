@@ -59,7 +59,7 @@ public class Jogo {
 		}
 		return b;
 	}
-	
+
 	public void jogada(Direcao direcao){	
 		if(labirinto.getHeroi().moveHeroi(this.labirinto, direcao) == 1){
 			if(dagroesDerrotados()){
@@ -105,6 +105,10 @@ public class Jogo {
 		return;
 	}
 	
+	/**
+	 * Devolve o labirinto sob forma de string
+	 * @return labirinto
+	 */
 	public String toString(){
 		String str = "";
 		for(int i=0; i< labirinto.getMapa().length;i++){
@@ -117,6 +121,10 @@ public class Jogo {
 		return str;
 	}
 	
+	/**
+	 * Devolve o estado do jogo sob forma textual
+	 * @return estado do jogo
+	 */
 	public String imprimeEstado(){
 		String str="";
 		if(estado == EstadoJogo.GANHOU)
@@ -127,6 +135,5 @@ public class Jogo {
 			 str="Antes de sair tem de derrotar o dragao";
 		
 		return str;
-		
 	}
 }
