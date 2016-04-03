@@ -13,7 +13,7 @@ public class main {
 		initializeGame();
 		
 		while(j.getEstado() != EstadoJogo.PERDEU && j.getEstado() != EstadoJogo.GANHOU){
-			j.imprime();
+			System.out.print(j.toString());
 			iteration();
 		}		
 		s.close();		

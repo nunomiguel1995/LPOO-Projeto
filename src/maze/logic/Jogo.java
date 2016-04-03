@@ -16,6 +16,10 @@ public class Jogo {
 		estado=EstadoJogo.INICIAL;
 	}
 	
+	public Jogo(Labirinto labirinto){
+		this.labirinto = labirinto;
+	}
+	
 	public Labirinto getLabirinto(){
 		return this.labirinto;
 	}
@@ -100,16 +104,6 @@ public class Jogo {
 		this.labirinto.atualizaLabirinto();
 		return;
 	}
-	
-	public void imprime() {
-		for(int i = 0; i < this.labirinto.getMapa().length; i++){
-			for(int j = 0; j < this.labirinto.getMapa()[0].length; j++){
-				System.out.print(this.labirinto.getMapa()[i][j] + " ");
-			}
-			System.out.println();
-		}
-	}
-	
 	
 	public String toString(){
 		String str = "";

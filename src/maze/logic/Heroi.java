@@ -5,11 +5,6 @@ import maze.logic.Jogo.Direcao;
 public class Heroi extends Personagem{
 	private boolean armado;
 	
-	public Heroi(){
-		super(new Ponto(0,0),'H');
-		this.armado = false;
-	}
-	
 	public Heroi(Ponto p, char simbolo){
 		super(p,simbolo);
 		this.armado = false;

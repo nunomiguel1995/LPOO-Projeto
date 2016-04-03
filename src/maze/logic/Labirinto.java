@@ -42,6 +42,10 @@ public class Labirinto {
 		this.espada = espada;
 	}
 
+	public void setDragao(Dragao[] dragao){
+		this.dragao = dragao;
+	}
+	
 	public Dragao[] getDragao() {
 		return this.dragao;
 	}

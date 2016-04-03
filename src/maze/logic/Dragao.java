@@ -6,17 +6,11 @@ public class Dragao extends Personagem{
 	private static Random movimentoDragao = new Random(); 
 	private static Random adormece = new Random();
 	
-	
 	private boolean vivo;
 	private boolean cimaEspada;
 	private boolean adormecido;
-	
-	public Dragao(){
-		super(new Ponto(0,0),'D');
-		this.vivo = true;
-		this.cimaEspada = false;
-	}
-	
+	private int movimento;
+
 	public Dragao(Ponto p, char simbolo){
 		super(p,simbolo);
 		this.vivo = true;
@@ -43,12 +37,12 @@ public class Dragao extends Personagem{
 		return adormecido;
 	}
 	
-	public void setAdormecido(boolean adormecido){
-		this.adormecido = adormecido;
+	public int getMovimento(){
+		return movimento;
 	}
 	
 	public void moveDragao(Labirinto labirinto){
-		int movimento = movimentoDragao.nextInt(6-1)+1;
+		movimento = movimentoDragao.nextInt(6-1)+1;
 
 		int dragaoX = getPosicao().getX(), dragaoY = getPosicao().getY();
 		
