@@ -5,19 +5,38 @@ import maze.logic.Jogo.Direcao;
 public class Heroi extends Personagem{
 	private boolean armado;
 	
+	/**
+	 * Constrói um herói no Ponto com o simbolo
+	 * @param p Ponto
+	 * @param simbolo simbolo do herói
+	 */
 	public Heroi(Ponto p, char simbolo){
 		super(p,simbolo);
 		this.armado = false;
 	}
 
+	/**
+	 * Verifica se o herói se encontra armado
+	 * @return true se o herói estiver armado
+	 */
 	public boolean isArmado() {
 		return this.armado;
 	}
 
+	/**
+	 * Altera o estado de armado do herói
+	 * @param estaArmado novo estado de armado do herói
+	 */
 	public void setArmado(boolean estaArmado) {
 		this.armado = estaArmado;
 	}
 	
+	/**
+	 * Verifica se é possível armar o herói e arma-o
+	 * 
+	 * @param e Espada a armar o herói
+	 * @param l Labirinto
+	 */
 	public void armaHeroi(Espada e,Labirinto l){
 		if(e.getPosicao().equals(getPosicao()) && armado==false){
 			setSimbolo('A');
@@ -26,6 +45,12 @@ public class Heroi extends Personagem{
 		}		
 	}
 
+	/**
+	 * Movimenta o herói no labirinto na direção definida pelo utilizador
+	 * @param l Labirinto
+	 * @param direcao direção a movimentar o herói
+	 * @return 1 se a saída estiver aberta e 0 se estiver fechada
+	 */
 	public int moveHeroi(Labirinto l, Direcao direcao){
 		boolean parede = false;
 		boolean saida = false;
@@ -83,6 +108,13 @@ public class Heroi extends Personagem{
 		return 0;
 	}
 	
+	/**
+	 * Verifica , se for possível, o resultado do confronto entre o herói e o dragão
+	 * 
+	 * @param dragao Dragão a ser enfrentado
+ 	 * @return 1 se o herói derrotar o dragão, 0 se o herói não estiver armado e o dragão estiver a dormir
+ 	 * e -1 se o herói for derrotao pelo dragão
+	 */
 	public int enfrentaDragao(Dragao dragao){
 		Ponto posHeroi = getPosicao();
 		Ponto posDragao = dragao.getPosicao();
