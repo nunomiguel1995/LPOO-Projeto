@@ -116,8 +116,8 @@ public class CostumizeMaze extends JPanel implements MouseListener{
 	public void mousePressed(MouseEvent e) {
 		float mouseX= e.getX();
 		float mouseY= e.getY();
-		double coordX= ((float)(mouseX / this.getWidth())* 25);
-		double coordY= ((float) (mouseY/this.getHeight())*25);
+		double coordX= ((float)(mouseX / width));
+		double coordY= ((float)(mouseY/height));
 		
 		if((int) coordX != largura-1 && (int) coordY != 0 && (int) coordY != altura-1){
 			switch(selection){
