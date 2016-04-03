@@ -68,7 +68,20 @@ public class CostumizeMaze extends JPanel implements MouseListener{
 		j.getLabirinto().setHeroi(h);
 		j.getLabirinto().setEspada(espada);
 		Dragao[] nDragoes= new Dragao[numeroDragoes];
-		j.getLabirinto().setDragoes(d.toArray(nDragoes));
+		j.getLabirinto().setDragao(d.toArray(nDragoes));
+		
+		
+		switch(modoJogo){
+		case "Estáticos": 
+			j.setComportamentoDragao(1);
+			break;
+		case "Movimentação aleatória":
+			j.setComportamentoDragao(2);
+			break;
+		case "Movimentação e adormecer":
+			j.setComportamentoDragao(3);
+			break;
+		}
 		
 		return j;
 	}

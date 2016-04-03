@@ -220,14 +220,14 @@ public class GraphicMaze extends JFrame implements KeyListener, MouseListener{
 				String opcao;
 				
 				try{
-				altura= Integer.parseInt(fldAltura.getText());
-				largura= Integer.parseInt(fldLargura.getText());
-				nDragoes= Integer.parseInt(fldNumeroDragoes.getText());
-				opcao= (String) cbTipoDragoes.getSelectedItem();
-				
-				if(altura<= 3|| largura <= 3 || nDragoes <= 0 
-						|| altura > 21 || largura > 25 || (altura % 2) == 0 || (largura %2) == 0)
-					throw new IllegalArgumentException();
+					altura= Integer.parseInt(fldAltura.getText());
+					largura= Integer.parseInt(fldLargura.getText());
+					nDragoes= Integer.parseInt(fldNumeroDragoes.getText());
+					opcao= (String) cbTipoDragoes.getSelectedItem();
+
+					if(altura<= 3|| largura <= 3 || nDragoes <= 0 
+							|| altura > 21 || largura > 25 || (altura % 2) == 0 || (largura %2) == 0)
+						throw new IllegalArgumentException();
 				}
 				catch(NumberFormatException ex){
 					JOptionPane.showMessageDialog(main, "Formato nao valido");
@@ -290,14 +290,14 @@ public class GraphicMaze extends JFrame implements KeyListener, MouseListener{
 				int altura,largura, nDragoes;
 				String opcao;			
 				try{
-				altura= Integer.parseInt(fldAltura.getText());
-				largura= Integer.parseInt(fldLargura.getText());
-				nDragoes= Integer.parseInt(fldNumeroDragoes.getText());
-				opcao= (String) cbTipoDragoes.getSelectedItem();
-				
-				if(altura<= 3|| largura <= 3 || nDragoes <= 0 
-						|| altura > 21 || largura > 25 || (altura % 2) == 0 || (largura %2) == 0)
-					throw new IllegalArgumentException();
+					altura= Integer.parseInt(fldAltura.getText());
+					largura= Integer.parseInt(fldLargura.getText());
+					nDragoes= Integer.parseInt(fldNumeroDragoes.getText());
+					opcao= (String) cbTipoDragoes.getSelectedItem();
+
+					if(altura<= 3|| largura <= 3 || nDragoes <= 0 
+							|| altura > 21 || largura > 25 || (altura % 2) == 0 || (largura %2) == 0)
+						throw new IllegalArgumentException();
 				}
 				catch(NumberFormatException ex){
 					JOptionPane.showMessageDialog(main, "Formato nao valido");
@@ -323,7 +323,7 @@ public class GraphicMaze extends JFrame implements KeyListener, MouseListener{
 		btnConcluir.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				windows.show(panels, "main");
-				j= draw.getJogo();
+				j = draw.getJogo();
 				panel = new GraphicPanel();
 				panel.setBounds(37, 133, 634, 525);
 				main.add(panel);

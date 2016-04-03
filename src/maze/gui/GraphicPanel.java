@@ -19,8 +19,6 @@ public class GraphicPanel extends JPanel implements KeyListener{
 	private int width = 25, height = 25;
 	private Image hero, armedHero, sword, dragon, wall, floor, exit, sleepDragon;
 	private Jogo j;
-	private String state = "";
-	
 	/**
 	 * Create the application.
 	 */
