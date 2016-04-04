@@ -39,6 +39,11 @@ public class GraphicMaze extends JFrame implements KeyListener, MouseListener{
 	private Jogo j;
 	CardLayout windows= new CardLayout();
 	private String modoJogo="Estáticos";
+
+	private final JButton btnCima = new JButton("Cima");
+	private final JButton btnEsquerda = new JButton("Esquerda");
+	private final JButton btnDireita = new JButton("Direita");
+	private final JButton btnBaixo = new JButton("Baixo");
 	
 
 	public static void main(String[] args) {
@@ -113,19 +118,22 @@ public class GraphicMaze extends JFrame implements KeyListener, MouseListener{
 		GameState.setBounds(41, 668, 279, 14);
 		main.add(GameState);
 		
-		final JButton btnCima = new JButton("Cima");
-		final JButton btnEsquerda = new JButton("Esquerda");
-		final JButton btnDireita = new JButton("Direita");
-		final JButton btnBaixo = new JButton("Baixo");
-		
 		
 		btnCima.setBounds(739, 181, 79, 33);
 		main.add(btnCima);
 		btnCima.setEnabled(false);
 		btnCima.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				if(j.getEstado() == EstadoJogo.PERDEU || j.getEstado() == EstadoJogo.GANHOU){
+					btnCima.setEnabled(false);
+					btnBaixo.setEnabled(false);
+					btnEsquerda.setEnabled(false);
+					btnDireita.setEnabled(false);
+					return;
+				}
 				j.jogada(Direcao.ESQUERDA);
 				panel.setJogo(j);
+				panel.requestFocus();
 				panel.repaint();
 				
 				if(j.imprimeEstado() == "")
@@ -133,13 +141,6 @@ public class GraphicMaze extends JFrame implements KeyListener, MouseListener{
 				else{
 					JOptionPane.showMessageDialog(main, j.imprimeEstado());
 					GameState.setText(j.imprimeEstado());
-				}
-				
-				if(j.getEstado() == EstadoJogo.PERDEU || j.getEstado() == EstadoJogo.GANHOU){
-					btnCima.setEnabled(false);
-					btnBaixo.setEnabled(false);
-					btnEsquerda.setEnabled(false);
-					btnDireita.setEnabled(false);
 				}
 			}
 		});
@@ -149,8 +150,16 @@ public class GraphicMaze extends JFrame implements KeyListener, MouseListener{
 		btnEsquerda.setEnabled(false);
 		btnEsquerda.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				if(j.getEstado() == EstadoJogo.PERDEU || j.getEstado() == EstadoJogo.GANHOU){
+					btnCima.setEnabled(false);
+					btnBaixo.setEnabled(false);
+					btnEsquerda.setEnabled(false);
+					btnDireita.setEnabled(false);
+					return;
+				}
 				j.jogada(Direcao.CIMA);
 				panel.setJogo(j);
+				panel.requestFocus();
 				panel.repaint();
 				
 				if(j.imprimeEstado() == "")
@@ -158,13 +167,6 @@ public class GraphicMaze extends JFrame implements KeyListener, MouseListener{
 				else{
 					JOptionPane.showMessageDialog(main, j.imprimeEstado());
 					GameState.setText(j.imprimeEstado());
-				}
-				
-				if(j.getEstado() == EstadoJogo.PERDEU || j.getEstado() == EstadoJogo.GANHOU){
-					btnCima.setEnabled(false);
-					btnBaixo.setEnabled(false);
-					btnEsquerda.setEnabled(false);
-					btnDireita.setEnabled(false);
 				}
 			}
 		});
@@ -174,8 +176,17 @@ public class GraphicMaze extends JFrame implements KeyListener, MouseListener{
 		btnDireita.setEnabled(false);
 		btnDireita.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				if(j.getEstado() == EstadoJogo.PERDEU || j.getEstado() == EstadoJogo.GANHOU){
+					btnCima.setEnabled(false);
+					btnBaixo.setEnabled(false);
+					btnEsquerda.setEnabled(false);
+					btnDireita.setEnabled(false);
+					return;
+				}
 				j.jogada(Direcao.BAIXO);
 				panel.setJogo(j);
+
+				panel.requestFocus();
 				panel.repaint();
 				
 				if(j.imprimeEstado() == "")
@@ -185,12 +196,6 @@ public class GraphicMaze extends JFrame implements KeyListener, MouseListener{
 					GameState.setText(j.imprimeEstado());
 				}
 				
-				if(j.getEstado() == EstadoJogo.PERDEU || j.getEstado() == EstadoJogo.GANHOU){
-					btnCima.setEnabled(false);
-					btnBaixo.setEnabled(false);
-					btnEsquerda.setEnabled(false);
-					btnDireita.setEnabled(false);
-				}
 			}
 		});
 		
@@ -199,8 +204,17 @@ public class GraphicMaze extends JFrame implements KeyListener, MouseListener{
 		btnBaixo.setEnabled(false);
 		btnBaixo.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				if(j.getEstado() == EstadoJogo.PERDEU || j.getEstado() == EstadoJogo.GANHOU){
+					btnCima.setEnabled(false);
+					btnBaixo.setEnabled(false);
+					btnEsquerda.setEnabled(false);
+					btnDireita.setEnabled(false);
+					return;
+				}
 				j.jogada(Direcao.DIREITA);
 				panel.setJogo(j);
+
+				panel.requestFocus();
 				panel.repaint();
 				
 				if(j.imprimeEstado() == "")
@@ -210,12 +224,6 @@ public class GraphicMaze extends JFrame implements KeyListener, MouseListener{
 					GameState.setText(j.imprimeEstado());
 				}
 				
-				if(j.getEstado() == EstadoJogo.PERDEU || j.getEstado() == EstadoJogo.GANHOU){
-					btnCima.setEnabled(false);
-					btnBaixo.setEnabled(false);
-					btnEsquerda.setEnabled(false);
-					btnDireita.setEnabled(false);
-				}
 			}
 		});
 		
@@ -374,6 +382,7 @@ public class GraphicMaze extends JFrame implements KeyListener, MouseListener{
 	@Override
 	public void keyPressed(KeyEvent k) {
 		panel.keyPressed(k);
+		
 	}
 
 	@Override

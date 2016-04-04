@@ -6,6 +6,7 @@ import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 
 import javax.swing.ImageIcon;
+import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
@@ -102,7 +103,6 @@ public class GraphicPanel extends JPanel implements KeyListener{
 		default:
 			break;
 		}
-		
 		if(j.getEstado() == EstadoJogo.PERDEU || j.getEstado() == EstadoJogo.GANHOU){
 			JOptionPane.showMessageDialog(this, j.imprimeEstado());
 			removeKeyListener(this);
@@ -113,5 +113,5 @@ public class GraphicPanel extends JPanel implements KeyListener{
 	public void keyReleased(KeyEvent k) {}
 
 	@Override
-	public void keyTyped(KeyEvent k) {}
+	public void keyTyped(KeyEvent k){}
 }
