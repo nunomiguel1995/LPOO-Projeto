@@ -55,7 +55,7 @@ public class main {
 		if(opcao!=1 && opcao!=2 && opcao!=3)
 			throw new IllegalArgumentException();
 		j.setComportamentoDragao(opcao);
-	}
+}
 
 	public static void iteration(){
 		int direcao;
