@@ -48,8 +48,7 @@ public class main {
 
 		}catch(IllegalArgumentException e){
 			System.out.println("Valores Invalidos!");
-		}
-		
+		}		
 	}
 	
 	public static void iteration(){
