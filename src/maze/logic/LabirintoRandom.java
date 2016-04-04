@@ -13,6 +13,10 @@ public class LabirintoRandom {
 	private Dragao dragao[];
 	private Heroi heroi;
 	
+	/**
+	 * Cria uma saída numa posição aleatória
+	 * @param r instancia Random
+	 */
 	private void saidaRandom(Random r){
 		saida=new Ponto(0,0);
 		
@@ -49,6 +53,9 @@ public class LabirintoRandom {
 		lab[saida.getY()][saida.getX()]='S';
 	}
 	
+	/**
+	 * Coloca uma guia na célula adjacente à saída
+	 */
 	private void inicializarGuia(){
 		int guiaX, guiaY;
 		Ponto p= new Ponto(saida.getX(),saida.getY());
@@ -68,15 +75,25 @@ public class LabirintoRandom {
 		guia= new Ponto(guiaX,guiaY);
 	}
 	
+	/**
+	 * Altera o estado de uma célula para visitada
+	 */
 	private void marcarGuiaVisitado(){
 		celulasVisitadas[guia.getY()][guia.getX()]=true;
 	}
 	
+	/**
+	 * Adiciona a uma stack a posição da célula do caminho do labirinto
+	 */
 	private void adicionarGuiaPath(){
 		path.push(new Ponto(guia.getX(),guia.getY()));
 	}
 	
-	//Baixo(0), Esquerda(1), Direita(2), Cima(3)
+	/**
+	 * Verifica se a célula vizinha já foi visitada.
+	 * @param direcao direção a movimentar a guia
+	 * @return true se a célula já tiver sido visitada
+	 */
 	private boolean celulaVizinhaVisitada(int direcao){
 		switch(direcao){
 		case 0:
@@ -93,6 +110,11 @@ public class LabirintoRandom {
 		return false;
 	}
 	
+	/**
+	 * Movimenta a guia numa direção aleatória
+	 * @param direcao direção a movimentar a guia
+	 * @return false se a célula já tiver sido visitada
+	 */
 	private boolean movimentaGuia(int direcao){
 		switch(direcao){
 		case 0:
@@ -118,6 +140,10 @@ public class LabirintoRandom {
 		return !celulaVizinhaVisitada(direcao);
 	}
 	
+	/**
+	 * Atualiza as coordenadas da guia dependendo da direção para a qual se moveu
+	 * @param direcao direção a mover a guia
+	 */
 	private void atualizaGuia(int direcao){
 		switch(direcao){
 		case 0:
@@ -137,6 +163,10 @@ public class LabirintoRandom {
 		}
 	}
 	
+	/**
+	 * Verifica se é possível movimentar a guia
+	 * @return true se é possível
+	 */
 	private boolean guiaPodeMexer(){
 		boolean b=false;
 		
@@ -147,6 +177,13 @@ public class LabirintoRandom {
 		return b;
 	}
 	
+	/**
+	 * Verifica se a posição inicial do herói é adjacente ao dragão
+	 * 
+	 * @param heroiX Abcissa da posição do herói
+	 * @param heroiY Ordenada da posição do herói
+	 * @return true se o herói estiver adjacente ao dragão
+	 */
 	private boolean heroiAdjacenteDragao(int heroiX, int heroiY){
 		boolean adj=false;
 		for(int i=0; i < dragao.length;i++){
@@ -161,6 +198,13 @@ public class LabirintoRandom {
 		}
 		return adj;
 	}
+	
+	/**
+	 * Constrói um labirinto aleatório a partir de uma largura, altura e nº de dragões
+	 * @param largura largura do labirinto
+	 * @param altura altura do labirinto
+	 * @param nDragoes nº de dragões do labirinto
+	 */
 	public LabirintoRandom(int largura, int altura, int nDragoes){
 		Random r= new Random();
 		lab= new char[altura][largura];
@@ -270,18 +314,34 @@ public class LabirintoRandom {
 		lab[heroiX][heroiY]=heroi.getSimbolo();
 	}
 	
+	/**
+	 * Devolve o mapa do labirinto
+	 * @return mapa do labirinto
+	 */
 	public char[][] getLab() {
 		return lab;
 	}
 
+	/**
+	 * Devolve a espada do labirinto
+	 * @return espada do labirinto
+	 */
 	public Espada getEspada() {
 		return espada;
 	}
 
+	/**
+	 * Devolve os dragões do labirinto sob forma de array
+	 * @return dragões do labirinto
+	 */
 	public Dragao[] getDragao() {
 		return dragao;
 	}
 
+	/**
+	 * Devolve o herói do labirinto
+	 * @return herói do labirinto
+	 */
 	public Heroi getHeroi() {
 		return heroi;
 	}

@@ -11,6 +11,11 @@ public class Dragao extends Personagem{
 	private boolean adormecido;
 	private int movimento;
 
+	/**
+	 * Constrói um dragão no Ponto p com o simbolo
+	 * @param p Ponto
+	 * @param simbolo simbolo do dragão
+	 */
 	public Dragao(Ponto p, char simbolo){
 		super(p,simbolo);
 		this.vivo = true;
@@ -18,30 +23,58 @@ public class Dragao extends Personagem{
 		this.adormecido=false;
 	}
 	
+	/**
+	 * Verifica o estado de vida do dragão
+	 * @return true se estiver vivo
+	 */
 	public boolean isVivo(){
 		return this.vivo;
 	}
 	
+	/**
+	 * Mata o dragão
+	 */
 	public void setMorto(){
 		this.vivo = false;
 	}
 	
+	/**
+	 * Devolve o estado de cima da espada do dragão
+	 * @return true se o dragão estiver em cima da espada
+	 */
 	public boolean getCimaEspada(){
 		return this.cimaEspada;
 	}
 	
+	/**
+	 * Altera o estado de cima da espada do dragão
+	 * @param cimaEspada novo estado de cima da espada
+	 */
 	public void setCimaEspada(boolean cimaEspada){
 		this.cimaEspada = cimaEspada;
 	}
 	
+	/**
+	 * Devolve o estado de adormecido do dragão
+	 * @return true se o dragão estiver adormecido
+	 */
 	public boolean getAdormecido(){
 		return adormecido;
 	}
 	
+	/**
+	 * Retorna o número correspondente ao movimento do dragão
+	 * @return número correspondente ao movimento do dragão
+	 */
 	public int getMovimento(){
 		return movimento;
 	}
 	
+	/**
+	 * Move o dragão aleatoriamente no labirinto
+	 * 
+	 * @param labirinto labirinto do jogo
+	 */
 	public void moveDragao(Labirinto labirinto){
 		movimento = movimentoDragao.nextInt(6-1)+1;
 
@@ -91,6 +124,11 @@ public class Dragao extends Personagem{
 		}				
 	}
 	
+	/**
+	 * Verifica se o dragão se encontra em cima da espada, e altera o seu simbolo caso
+	 * seja verdade
+	 * @param espada espada do labirinto
+	 */
 	public void dragaoCimaEspada(Espada espada){
 		Ponto posEspada = espada.getPosicao();
 		Ponto posDragao = getPosicao();
@@ -108,6 +146,9 @@ public class Dragao extends Personagem{
 		}
 	}
 	
+	/**
+	 * Altera o estado de adormecido ou acordado do dragão aleatoriamente
+	 */
 	public void adormeceOuAcorda(){
 		int i = adormece.nextInt(6-1)+1;
 		if((i % 2) == 0){

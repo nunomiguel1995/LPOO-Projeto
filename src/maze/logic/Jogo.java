@@ -2,40 +2,84 @@ package maze.logic;
 
 import java.util.Scanner;
 
+/**
+ * The Class Jogo.
+ */
 public class Jogo {
+	
 	public enum ModoDragao {PARADO,ALEATORIO,DORME_ALEATORIO}
+	
 	public enum EstadoJogo {GANHOU,PERDEU,SAIDA_FECHADA,INICIAL} 
-	public enum Direcao {CIMA, BAIXO, ESQUERDA, DIREITA}
+	
+	public enum Direcao {CIMA,BAIXO,ESQUERDA,DIREITA}
 	
 	private Labirinto labirinto;
 	private ModoDragao comportamentoDragao;
 	private EstadoJogo estado;
 		
+	/**
+	 * Constrói um novo jogo e cria um labirinto a partir da altura,
+	 * largura e nº de dragões definido pelo utilizador
+	 *
+	 * @param altura altura do labirinto
+	 * @param largura largura do labirinto
+	 * @param ndragoes nº de dragões do labirinto
+	 */
 	public Jogo(int altura, int largura,int ndragoes){
 		this.labirinto = new Labirinto(altura,largura,ndragoes);
 		estado=EstadoJogo.INICIAL;
 	}
 	
+	/**
+	 * Contrói um novo jogo a partir de um labirinto pré-definido
+	 *
+	 * @param labirinto labirinto do jogo
+	 */
 	public Jogo(Labirinto labirinto){
 		this.labirinto = labirinto;
 	}
 	
+	/**
+	 * Devolve o labirinto do jogo
+	 *
+	 * @return labirinto do jogo
+	 */
 	public Labirinto getLabirinto(){
 		return this.labirinto;
 	}
 	
+	/**
+	 * Altera o labirinto do jogo
+	 *
+	 * @param labirinto novo labirinto
+	 */
 	public void setLabirinto(Labirinto labirinto){
 		this.labirinto = labirinto;
 	}
 	
+	/**
+	 * Devolve o estado do jogo
+	 *
+	 * @return estado do jogo
+	 */
 	public EstadoJogo getEstado() {
 		return estado;
 	}
 
+	/**
+	 * Altera o estado do jogo
+	 *
+	 * @param estado novo estado do jogo
+	 */
 	public void setEstado(EstadoJogo estado) {
 		this.estado = estado;
 	}
 
+	/**
+	 * Altera o comportamento dos dragões do labirinto
+	 *
+	 * @param escolha novo comportamento dos dragões
+	 */
 	public void setComportamentoDragao(int escolha){
 		if(escolha == 1)
 			comportamentoDragao=ModoDragao.PARADO;
@@ -47,7 +91,12 @@ public class Jogo {
 			comportamentoDragao=ModoDragao.PARADO;
 	}
 	
-	public boolean dagroesDerrotados(){
+	/**
+	 * Verifica se todos os dragões foram derrotados
+	 *
+	 * @return true se todos os dragões tiverem sido derrotados
+	 */
+	public boolean dragoesDerrotados(){
 		boolean b=true;
 		Dragao d[]= labirinto.getDragao();
 		
@@ -59,10 +108,16 @@ public class Jogo {
 		}
 		return b;
 	}
-
+	
+	/**
+	 * Movimenta o herói na direção pretendida pelo utilizador e no caso o modo de jogo implicar
+	 * movimentação do dragão, movimenta-o também.
+	 *
+	 * @param direcao direção de movimento do herói
+	 */
 	public void jogada(Direcao direcao){	
 		if(labirinto.getHeroi().moveHeroi(this.labirinto, direcao) == 1){
-			if(dagroesDerrotados()){
+			if(dragoesDerrotados()){
 				setEstado(EstadoJogo.GANHOU);
 				return;
 			}else{
@@ -106,7 +161,8 @@ public class Jogo {
 	}
 	
 	/**
-	 * Devolve o labirinto sob forma de string
+	 * Devolve o labirinto sob forma de string.
+	 *
 	 * @return labirinto
 	 */
 	public String toString(){
@@ -122,7 +178,8 @@ public class Jogo {
 	}
 	
 	/**
-	 * Devolve o estado do jogo sob forma textual
+	 * Devolve o estado do jogo sob forma textual.
+	 *
 	 * @return estado do jogo
 	 */
 	public String imprimeEstado(){
