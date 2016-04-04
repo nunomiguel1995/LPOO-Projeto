@@ -16,13 +16,15 @@ import maze.logic.Jogo.EstadoJogo;
 
 public class GraphicPanel extends JPanel implements KeyListener{
 
-	private int width = 25, height = 25;
+	private int width , height;
 	private Image hero, armedHero, sword, dragon, wall, floor, exit, sleepDragon;
 	private Jogo j;
 	/**
 	 * Create the application.
 	 */
-	public GraphicPanel() {
+	public GraphicPanel(int altura, int largura) {
+		width= (int) ( 634/ largura);
+		height= (int)(525/ altura);
 		hero = new ImageIcon("hero.png").getImage();
 		armedHero = new ImageIcon("armedHero.png").getImage();
 		sword = new ImageIcon("sword.png").getImage();

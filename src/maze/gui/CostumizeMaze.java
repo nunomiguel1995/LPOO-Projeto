@@ -6,14 +6,12 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.util.ArrayList;
 import javax.swing.ImageIcon;
-import javax.swing.JFrame;
 import javax.swing.JPanel;
-import javax.swing.JButton;
 import maze.logic.*;
 
 public class CostumizeMaze extends JPanel implements MouseListener{
 
-	private int width = 25, height = 25, numeroDragoes, altura, largura;
+	private int width, height, numeroDragoes, altura, largura;
 	private Image hero, armedHero, sword, dragon, wall, floor, exit, sleepDragon;
 	private char[][] maze;
 	private Heroi h;
@@ -26,6 +24,8 @@ public class CostumizeMaze extends JPanel implements MouseListener{
 	public CostumizeMaze(int altura, int largura, int numeroDragoes,String modoJogo) {
 		maze= new char[largura][altura];	
 		d= new ArrayList<Dragao>();
+		width= (int) (634/largura);
+		height= (int) (525/ altura);
 		this.modoJogo=modoJogo;
 		this.altura=altura;
 		this.largura=largura;
@@ -58,18 +58,28 @@ public class CostumizeMaze extends JPanel implements MouseListener{
 		addMouseListener(this);	
 	}
 	
+	public int getAltura(){
+		return altura;
+	}
+	
+	public int getLargura(){
+		return largura;
+	}
+	
 	public void setSelection(String s){
 		this.selection=s;
 	}
 	
 	public Jogo getJogo(){
 		Jogo j= new Jogo(altura,largura,numeroDragoes);
-		j.getLabirinto().setMapa(maze);
+		j.getLabirinto().setMapa(maze.clone());
 		j.getLabirinto().setHeroi(h);
 		j.getLabirinto().setEspada(espada);
 		Dragao[] nDragoes= new Dragao[numeroDragoes];
-		j.getLabirinto().setDragao(d.toArray(nDragoes));
-		
+		for(int i=0; i<nDragoes.length;i++){
+			nDragoes[i]= d.get(i);
+		}
+		j.getLabirinto().setDragao(nDragoes);
 		
 		switch(modoJogo){
 		case "Estáticos": 
@@ -82,7 +92,6 @@ public class CostumizeMaze extends JPanel implements MouseListener{
 			j.setComportamentoDragao(3);
 			break;
 		}
-		
 		return j;
 	}
 	@Override
@@ -132,7 +141,7 @@ public class CostumizeMaze extends JPanel implements MouseListener{
 		double coordX= ((float)(mouseX / width));
 		double coordY= ((float)(mouseY/height));
 		
-		if((int) coordX != largura-1 && (int) coordY != 0 && (int) coordY != altura-1){
+		if((int) coordX != largura-1 && (int) coordY != 0 && (int) coordY != altura-1 && (int) coordX !=0){
 			switch(selection){
 			case "Chão": 
 				 maze[(int) coordX][(int)coordY]=' ';

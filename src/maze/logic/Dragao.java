@@ -15,6 +15,7 @@ public class Dragao extends Personagem{
 		super(p,simbolo);
 		this.vivo = true;
 		this.cimaEspada = false;
+		this.adormecido=false;
 	}
 	
 	public boolean isVivo(){

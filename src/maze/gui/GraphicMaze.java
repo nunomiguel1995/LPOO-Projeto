@@ -38,6 +38,7 @@ public class GraphicMaze extends JFrame implements KeyListener, MouseListener{
 	JComboBox<String> cbComponentes;
 	private Jogo j;
 	CardLayout windows= new CardLayout();
+	private String modoJogo="Estáticos";
 	
 
 	public static void main(String[] args) {
@@ -101,6 +102,11 @@ public class GraphicMaze extends JFrame implements KeyListener, MouseListener{
 		String[] tipoDragoes= {"Estáticos", "Movimentação aleatória", "Movimentação e adormecer"};
 		final JComboBox cbTipoDragoes = new JComboBox(tipoDragoes);
 		cbTipoDragoes.setBounds(193, 105, 257, 20);
+		cbTipoDragoes.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				modoJogo= (String) cbComponentes.getSelectedItem();
+			}
+		});	
 		main.add(cbTipoDragoes);
 		
 		final JLabel GameState = new JLabel("Pode gerar um novo Labirinto!");
@@ -251,7 +257,7 @@ public class GraphicMaze extends JFrame implements KeyListener, MouseListener{
 					break;
 				}
 				
-				panel = new GraphicPanel();
+				panel = new GraphicPanel(altura,largura);
 				panel.setBounds(37, 133, 634, 525);
 				main.add(panel);
 				panel.setJogo(j);
@@ -293,7 +299,6 @@ public class GraphicMaze extends JFrame implements KeyListener, MouseListener{
 					altura= Integer.parseInt(fldAltura.getText());
 					largura= Integer.parseInt(fldLargura.getText());
 					nDragoes= Integer.parseInt(fldNumeroDragoes.getText());
-					opcao= (String) cbTipoDragoes.getSelectedItem();
 
 					if(altura<= 3|| largura <= 3 || nDragoes <= 0 
 							|| altura > 21 || largura > 25 || (altura % 2) == 0 || (largura %2) == 0)
@@ -307,7 +312,7 @@ public class GraphicMaze extends JFrame implements KeyListener, MouseListener{
 					JOptionPane.showMessageDialog(main, "Números inválidos");
 					return;
 				}
-				draw = new CostumizeMaze(altura,largura,nDragoes,opcao);
+				draw = new CostumizeMaze(altura,largura,nDragoes,modoJogo);
 				draw.setBounds(37, 133, 634, 525);
 				costumize.add(draw);
 				windows.show(panels, "costumize");
@@ -324,7 +329,7 @@ public class GraphicMaze extends JFrame implements KeyListener, MouseListener{
 			public void actionPerformed(ActionEvent e) {
 				windows.show(panels, "main");
 				j = draw.getJogo();
-				panel = new GraphicPanel();
+				panel = new GraphicPanel(draw.getAltura(),draw.getLargura());
 				panel.setBounds(37, 133, 634, 525);
 				main.add(panel);
 				panel.setJogo(j);
