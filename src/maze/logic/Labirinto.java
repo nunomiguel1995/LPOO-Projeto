@@ -61,6 +61,9 @@ public class Labirinto {
 	public Espada getEspada() {
 		return this.espada;
 	}
+	public void setNumeroDragoes(int n){
+		this.nDragoes=n;
+	}
 
 	/**
 	 * Altera a espada do labirinto
@@ -76,7 +79,7 @@ public class Labirinto {
 	 * @param dragao novos dragões
 	 */
 	public void setDragao(Dragao[] dragao){
-		this.dragao = dragao;
+		this.dragao = dragao.clone();
 	}
 	
 	/**
@@ -162,13 +165,5 @@ public class Labirinto {
 			mapa[dragao[i].getPosicao().getX()][dragao[i].getPosicao().getY()]=dragao[i].getSimbolo();
 		}	
 		mapa[heroi.getPosicao().getX()][heroi.getPosicao().getY()]=heroi.getSimbolo();
-	}
-	
-	/**
-	 * Altera os dragões do labirinto
-	 * @param d novos dragões do labirinto
-	 */
-	public void setDragoes(Dragao[] d){
-		this.dragao=d;
 	}
 }

@@ -16,14 +16,16 @@ public class CostumizeMaze extends JPanel implements MouseListener{
 	private char[][] maze;
 	private Heroi h;
 	private Espada espada;
-	private ArrayList<Dragao> d;
+	private Dragao[] d;
 	private String selection;
 	private String modoJogo;
 	private Ponto saida;
+	private Jogo j;
+	private int i=0;
 	
 	public CostumizeMaze(int altura, int largura, int numeroDragoes,String modoJogo) {
 		maze= new char[largura][altura];	
-		d= new ArrayList<Dragao>();
+		d= new Dragao[numeroDragoes];
 		width= (int) (634/largura);
 		height= (int) (525/ altura);
 		this.modoJogo=modoJogo;
@@ -31,6 +33,7 @@ public class CostumizeMaze extends JPanel implements MouseListener{
 		this.largura=largura;
 		selection="Parede";
 		this.numeroDragoes=numeroDragoes;
+		j= new Jogo(altura,largura,numeroDragoes);
 		
 		hero = new ImageIcon("hero.png").getImage();		
 		armedHero = new ImageIcon("armedHero.png").getImage();
@@ -65,22 +68,16 @@ public class CostumizeMaze extends JPanel implements MouseListener{
 	public int getLargura(){
 		return largura;
 	}
-	
+
 	public void setSelection(String s){
 		this.selection=s;
 	}
 	
 	public Jogo getJogo(){
-		Jogo j= new Jogo(altura,largura,numeroDragoes);
 		j.getLabirinto().setMapa(maze.clone());
 		j.getLabirinto().setHeroi(h);
 		j.getLabirinto().setEspada(espada);
-		Dragao[] nDragoes= new Dragao[numeroDragoes];
-		for(int i=0; i<nDragoes.length;i++){
-			nDragoes[i]= d.get(i);
-		}
-		j.getLabirinto().setDragao(nDragoes);
-		
+		j.getLabirinto().setDragao(d.clone());		
 		switch(modoJogo){
 		case "Estáticos": 
 			j.setComportamentoDragao(1);
@@ -167,7 +164,8 @@ public class CostumizeMaze extends JPanel implements MouseListener{
 				if(numeroDragoes>0){
 					maze[(int) coordX][(int)coordY]='D';
 					Dragao dragao= new Dragao(new Ponto((int) coordX, (int) coordY),'D');
-					d.add(dragao);
+					d[i]=dragao;
+					i++;
 					numeroDragoes--;
 				}
 				break;

@@ -29,7 +29,7 @@ public class Jogo {
 		this.labirinto = new Labirinto(altura,largura,ndragoes);
 		estado=EstadoJogo.INICIAL;
 	}
-	
+
 	/**
 	 * Contrói um novo jogo a partir de um labirinto pré-definido
 	 *

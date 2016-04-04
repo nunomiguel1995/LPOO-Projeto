@@ -70,7 +70,7 @@ public class GraphicMaze extends JFrame implements KeyListener, MouseListener{
 
 	private void initialize() {	
 		
-		frame.setBounds(100, 100, 931, 732);
+		frame.setBounds(100, 0, 931, 732);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		main.setLayout(null);
 		costumize.setLayout(null);
