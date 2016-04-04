@@ -35,14 +35,14 @@ public class CostumizeMaze extends JPanel implements MouseListener{
 		this.numeroDragoes=numeroDragoes;
 		j= new Jogo(altura,largura,numeroDragoes);
 		
-		hero = new ImageIcon("hero.png").getImage();		
-		armedHero = new ImageIcon("armedHero.png").getImage();
-		sword = new ImageIcon("sword.png").getImage();
-		dragon = new ImageIcon("dragon.png").getImage();
-		wall = new ImageIcon("wall.png").getImage();
-		floor = new ImageIcon("floor.png").getImage();
-		exit = new ImageIcon("exit.png").getImage();
-		sleepDragon= new ImageIcon("sleepDragon.png").getImage();
+		hero = new ImageIcon("images/hero.png").getImage();		
+		armedHero = new ImageIcon("images/armedHero.png").getImage();
+		sword = new ImageIcon("images/sword.png").getImage();
+		dragon = new ImageIcon("images/dragon.png").getImage();
+		wall = new ImageIcon("images/wall.png").getImage();
+		floor = new ImageIcon("images/floor.png").getImage();
+		exit = new ImageIcon("images/exit.png").getImage();
+		sleepDragon= new ImageIcon("images/sleepDragon.png").getImage();
 		hero = hero.getScaledInstance(width, height, 1);
 		armedHero = armedHero.getScaledInstance(width, height, 1);
 		sword = sword.getScaledInstance(width, height, 1);

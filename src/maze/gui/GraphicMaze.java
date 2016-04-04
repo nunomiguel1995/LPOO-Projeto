@@ -64,7 +64,7 @@ public class GraphicMaze extends JFrame implements KeyListener, MouseListener{
 		frame.add(panels);
 		frame.setVisible(true);
 		
-		addKeyListener(this);
+		//addKeyListener(this);
 		addMouseListener(this);
 	}
 
